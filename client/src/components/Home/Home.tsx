@@ -34,7 +34,7 @@ function Home() {
               }
             />
             <Step
-              title={"Step 3. Add your expenses"}
+              title={"Step 2. Create a group"}
               description={
                 "Lorem ipsum dolor sit amet consectetur. Ullamcorper lobortis elementum volutpat ac."
               }
@@ -42,7 +42,7 @@ function Home() {
           </div>
           <div className="right-steps">
             <Step
-              title={"Step 2. Create a group"}
+              title={"Step 3. Add your expenses"}
               description={
                 "Lorem ipsum dolor sit amet consectetur. Ullamcorper lobortis elementum volutpat ac."
               }

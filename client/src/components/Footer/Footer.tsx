@@ -12,6 +12,7 @@ function Footer() {
         </div>
       </div>
       <a
+        rel="noreferrer"
         target="_blank"
         href="https://github.com/rajuTK9/CashCut"
         className="contribute-btn"
