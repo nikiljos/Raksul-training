@@ -1,0 +1,138 @@
+.home-hero {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1.5fr;
+  justify-content: space-between;
+  padding: 10rem 8rem;
+}
+
+.home-hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0rem;
+  gap: 4.6rem;
+}
+
+.home-hero-left .hero-text {
+}
+
+.home-hero-left .hero-text .hero-text-md {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 3.6rem;
+  /* identical to box height */
+
+  color: #000000;
+
+  margin-bottom: 2rem;
+}
+
+.home-hero-left .hero-text .hero-text-lg {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 4.8rem;
+
+  color: #000000;
+  margin-bottom: 1.5rem;
+}
+.home-hero-left .hero-text .hero-text-sm {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+
+  color: #000000;
+}
+
+.hero-cta {
+  width: 100%;
+}
+
+.home-hero-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.home-hero-right img {
+  width: 40rem;
+}
+
+.home-working {
+  background: #eeeeee;
+  padding: 6rem 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.working-title {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 3.2rem;
+  line-height: 4.8rem;
+  /* identical to box height */
+
+  color: #000000;
+}
+
+.working-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0rem;
+  gap: 1rem;
+}
+
+.left-steps,
+.right-steps {
+  display: flex;
+  flex-direction: column;
+  padding: 0rem;
+  gap: 5rem;
+}
+
+.working-cta {
+  padding: 1.5rem 9rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 700px) {
+  .home-hero {
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+  }
+
+  .home-hero-right img {
+    width: 35rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-hero {
+    padding: 8rem 4.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  .home-hero-right {
+    display: none;
+  }
+
+  .home-working {
+    padding: 6rem 4.5rem;
+  }
+
+  .working-steps {
+    grid-template-columns: 1fr;
+    gap: 5rem;
+  }
+}

@@ -1,0 +1,18 @@
+.navbar {
+  background-color: #ffcd44;
+  height: 8rem;
+  padding: 2.5rem 8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo img {
+  height: 3.2rem;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 2.5rem 4rem;
+  }
+}

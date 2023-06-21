@@ -1,0 +1,10 @@
+.nav-btn {
+  height: 4rem;
+  background: #000000;
+  border-radius: 0.5rem;
+  padding: 0.5rem 3rem;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 3rem;
+  color: #ffffff;
+}
