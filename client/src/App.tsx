@@ -1,8 +1,16 @@
-import React from "react";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/Home/Home";
+import Navbar from "./components/Navbar/Navbar";
 
-function App() {
-  return <div className="App">Hello</div>;
-}
+const App: React.FC = () => {
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" Component={Home} />
+      </Routes>
+    </>
+  );
+};
 
 export default App;

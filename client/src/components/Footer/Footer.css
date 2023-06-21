@@ -1,0 +1,46 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  position: relative;
+  padding: 40px;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 50px;
+  color: white;
+}
+
+.footer-logo img {
+  height: 32px;
+}
+
+.contribute-btn {
+  background: #161b22;
+  border-radius: 8px;
+  padding: 7px 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-items: center;
+
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+}
+
+.contribute-text {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height */
+
+  color: #ffffff;
+}
