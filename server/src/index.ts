@@ -6,6 +6,9 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+import { init } from "./config/db.config";
+init() //db connect
+
 import router from "./routers"
 
 app.use(cors())
