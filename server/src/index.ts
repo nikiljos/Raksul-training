@@ -7,6 +7,9 @@ import * as dotenv from "dotenv";
 dotenv.config();
 app.use(express.json());
 
+import { init } from "./config/db.config";
+init() //db connect
+
 import router from "./routers";
 
 app.use(cors());
