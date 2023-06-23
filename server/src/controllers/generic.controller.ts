@@ -35,6 +35,7 @@ async function verifyToken(token: string): Promise<string | null> {
   }
 
   return null;
+
 }
 const login = async (req: Request, res: Response) => {
   const token = req.body.tokenId.credential;
@@ -70,6 +71,30 @@ const userCount=async (req:Request,res:Response)=>{
         }
     })
 }
+const login = async (req: Request, res: Response) => {
+  const token = req.body.tokenId.credential;
+
+  verifyToken(token)
+    .then((data) => {
+      if (data) {
+        console.log("Token verification successful");
+        console.log(data);
+        res.status(200).send({
+          success: true,
+          message: "Token verification successful",
+          data: {
+            data,
+          },
+        });
+      } else {
+        console.log("Token verification failed");
+      }
+    })
+    .catch((error) => {
+      console.error("Google authentication error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+};
 
 export default {
     ping,
