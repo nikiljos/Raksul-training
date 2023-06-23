@@ -34,7 +34,7 @@ function Login() {
   };
 
   const validate = (values: FormValues) => {
-    const errors = { email: "", password: "" };
+    const errors: ErrorValues = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const passwordRegex = /[!@#$%^&*(),.?":{}|<>]/;
 
@@ -71,6 +71,7 @@ function Login() {
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data) setIsSubmit(true);
         console.log("Message:", data);
       })
       .catch((error) => {
@@ -85,7 +86,7 @@ function Login() {
       </h1>
       <form action="/" className="login-form" onSubmit={handleSubmit}>
         {Object.keys(formErrors).length === 0 && isSubmit ? (
-          <div className="success">Registration Successful</div>
+          <div className="success">Logged In Successful</div>
         ) : (
           <></>
         )}
@@ -97,7 +98,7 @@ function Login() {
             name="email"
             id="email"
             value={formValues.email}
-            placeholder="Email"
+            placeholder="john@doe.com"
           />
         </div>
         <p>{formErrors.email}</p>
@@ -109,7 +110,7 @@ function Login() {
             name="password"
             id="password"
             value={formValues.password}
-            placeholder="Password"
+            placeholder="********"
           />
         </div>
         <p>{formErrors.password}</p>
