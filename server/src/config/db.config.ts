@@ -12,7 +12,8 @@ const sequelize = new Sequelize(
 );
 
 export const init = () => {
-  sequelize.authenticate()
+  sequelize
+    .authenticate()
     .then(() => {
       console.log("Database Connection has been established successfully.");
     })

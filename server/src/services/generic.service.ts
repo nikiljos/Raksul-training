@@ -1,12 +1,12 @@
-import User from "../models/user.model"
+import User from "../models/user.model";
 
-const getTimeString=()=>{
-    return new Date().toString()
-}
+const getTimeString = () => {
+  return new Date().toString();
+};
 
-const userCount=()=>User.count()
+const userCount = () => User.count();
 
 export default {
-    getTimeString,
-    userCount
-}
+  getTimeString,
+  userCount,
+};
