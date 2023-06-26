@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import genericService from "../services/auth.service";
+import authService from "../services/auth.service";
 import { TokenPayload } from "google-auth-library";
 
 interface AuthenticatedRequest extends Request {
@@ -8,7 +8,7 @@ interface AuthenticatedRequest extends Request {
 
 const login = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    let authToken = await genericService.getAuthToken(req.user!);
+    let authToken = await authService.getAuthToken(req.user!);
 
     if (!authToken) {
       console.log("Token verification failed");

@@ -8,12 +8,12 @@ dotenv.config();
 app.use(express.json());
 
 import { init } from "./config/db.config";
-init() //db connect
+init(); //db connect
 
 import router from "./routers";
 
 app.use(cors());
-app.use(router);
+app.use("/api", router);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
