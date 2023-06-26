@@ -44,6 +44,10 @@ a {
   color: inherit;
 }
 
+input {
+  outline: none;
+}
+
 @media (max-width: 1024px) {
   html {
     font-size: 48%;
