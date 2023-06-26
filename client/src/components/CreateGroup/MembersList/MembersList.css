@@ -1,0 +1,25 @@
+.members-list {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.member-box {
+  border-radius: 20px;
+  border: 1px solid #000;
+  padding: 5px 15px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.member-name {
+  color: #000;
+  font-size: 16px;
+  font-family: Poppins;
+}
+
+.delete-member-btn img {
+  width: 10px;
+}
