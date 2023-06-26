@@ -7,7 +7,9 @@ dotenv.config(); // Load environment variables from .env file
 const jwtUtils = {
   signToken: (payload: any): string => {
     const secretKey = process.env.SECRET_KEY as Secret;
-    const token = jwt.sign(payload, secretKey);
+    const token = jwt.sign(payload, secretKey, {
+      expiresIn: "1d",
+    });
     return token;
   },
   verifyToken: (token: string): any => {

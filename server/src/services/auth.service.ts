@@ -5,10 +5,10 @@ const getAuthToken = async (payload: any) => {
   const { email, name, picture } = payload;
 
   // Create the user if it doesn't exist
-  await createUserIfNotExists(email, name, picture || null);
-
+  let user = await createUserIfNotExists(email, name, picture || null);
+  const sub = user.get("id");
   // Generate a JWT
-  const token: string = jwtUtils.signToken(payload);
+  const token: string = jwtUtils.signToken({ sub });
   return token;
 };
 
@@ -17,10 +17,10 @@ async function createUserIfNotExists(
   name: string,
   profileURL: string | null
 ) {
-  const userExists = await User.findOne({ where: { email } });
-  if (!userExists) {
+  let user = await User.findOne({ where: { email } });
+  if (!user) {
     try {
-      await User.create({
+      user = await User.create({
         email,
         name,
         profileURL,
@@ -29,6 +29,7 @@ async function createUserIfNotExists(
       throw new Error("Error creating user");
     }
   }
+  return user;
 }
 
 export default {

@@ -2,6 +2,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { OAuth2Client, TokenPayload } from "google-auth-library";
+import jwtUtils from "../utils/jwtUtils";
 
 const CLIENT_ID = process.env.OAUTH_CID;
 const client = new OAuth2Client(CLIENT_ID);
@@ -10,7 +11,7 @@ interface AuthenticatedRequest extends Request {
   user?: TokenPayload;
 }
 
-async function authenticateToken(
+export async function checkGAuth(
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction
@@ -35,4 +36,12 @@ async function authenticateToken(
   }
 }
 
-export default authenticateToken;
+export const checkUser=(req:Request,res:Response,next:NextFunction)=>{
+  if(!req.headers.authorization||typeof req.headers.authorization!=="string"){
+      return next(new Error("Invalid Auth Header"))
+  }
+  let token=req.headers.authorization!.split(" ")[1]
+  let payload=jwtUtils.verifyToken(token)
+  res.locals.user=payload.sub;
+  next()
+}
