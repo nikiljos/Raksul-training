@@ -8,10 +8,8 @@
   align-items: center;
   grid-template-columns: 1fr 1fr;
 
-  padding: 100px 30px;
+  padding: 50px 30px;
   padding-bottom: 0;
-
-  margin-bottom: 20px;
 }
 
 .group-form-left,
