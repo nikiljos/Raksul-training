@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import NavButton from "./NavButton/NavButton";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   function getUserDetails() {
@@ -32,9 +33,14 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="nav-logo">
-        <img src="./images/cashcut-logo.svg" alt="CashCut" />
+        <Link to="/home">
+          <img src="./images/cashcut-logo.svg" alt="CashCut" />
+        </Link>
       </div>
-      <NavButton />
+      <div className="nav-links">
+        <Link to={"/history"}>Previous Records</Link>
+        <NavButton />
+      </div>
     </div>
   );
 }

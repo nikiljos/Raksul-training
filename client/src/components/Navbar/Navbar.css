@@ -11,6 +11,18 @@
   height: 3.2rem;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  justify-content: center;
+
+  color: #000;
+  font-size: 2rem;
+  font-family: Poppins;
+  font-weight: 700;
+}
+
 @media (max-width: 600px) {
   .navbar {
     padding: 2.5rem 4rem;

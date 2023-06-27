@@ -1,0 +1,20 @@
+.group-history {
+  padding: 50px 80px;
+}
+
+.history-heading {
+  color: #000;
+  font-size: 24px;
+  font-family: Poppins;
+  font-weight: 700;
+
+  margin-bottom: 30px;
+}
+
+.history-cards-container {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}

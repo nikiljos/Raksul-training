@@ -13,4 +13,13 @@ const createGroup = (req: Request, res: Response) => {
   });
 };
 
-export default { createGroup };
+const getHistory = async (req: Request, res: Response) => {
+  const admin = req.params.id;
+  const data = await groupService.getHistory(Number(admin));
+  res.status(200).send({
+    success: true,
+    data,
+  });
+};
+
+export default { createGroup, getHistory };

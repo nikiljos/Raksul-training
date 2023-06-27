@@ -21,7 +21,15 @@ const generateInvitationCode = () => {
   return uniqid.time().toUpperCase();
 };
 
+const getHistory = async (admin: number) => {
+  return await Group.findAll({
+    where: { admin },
+    order: [["createdAt", "DESC"]],
+  });
+};
+
 export default {
   createGroup,
   generateInvitationCode,
+  getHistory,
 };

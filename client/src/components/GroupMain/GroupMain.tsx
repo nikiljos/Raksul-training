@@ -1,26 +1,24 @@
 import "./GroupMain.css";
 import GroupForm from "./GroupForm/GroupForm";
-// import MembersList from "./MembersList/MembersList";
-
-// type groupData = {
-//   groupName: string | null;
-//   membersList: Array<string>;
-// };
+import GroupHistory from "../GroupHistory/GroupHistory";
+import { Link } from "react-router-dom";
 
 function GroupMain() {
-  // const [groupData, setGroupData] = useState<groupData>({
-  //   groupName: null,
-  //   membersList: [],
-  // });
-  // const [memberName, setMemberName] = useState<string | null>();
-
   return (
     <div className="group-main-container">
-      <div className="group-main-left">
-        <GroupForm endpoint="group/create" createGroup={true} />
+      <div className="group-form-container">
+        <div className="group-form-left">
+          <GroupForm endpoint="group/create" createGroup={true} />
+        </div>
+        <div className="group-form-right">
+          <GroupForm endpoint="group/join" createGroup={false} />
+        </div>
       </div>
-      <div className="group-main-right">
-        <GroupForm endpoint="group/join" createGroup={false} />
+      <div className="group-records">
+        <GroupHistory limit={3} />
+        <Link to={"/history"} className="view-more-btn">
+          View More
+        </Link>
       </div>
     </div>
   );

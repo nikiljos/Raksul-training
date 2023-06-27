@@ -1,0 +1,43 @@
+.history-card {
+  border-radius: 15px;
+  border: 3px solid #000;
+  width: 100%;
+
+  padding: 20px 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hc-content .title {
+  color: #000;
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 700;
+}
+
+.hc-content .date {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+  font-family: Poppins;
+}
+
+.hc-btn-container {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.hc-btn {
+  border-radius: 5px;
+  background: #ffcd44;
+  padding: 8px;
+
+  display: flex;
+  align-items: center;
+}
+
+.hc-btn.file {
+  background: #00ce00;
+}
