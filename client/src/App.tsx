@@ -3,7 +3,7 @@ import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/LoginSignup/Login";
 import Signup from "./components/LoginSignup/Signup";
-import CreateGroup from "./components/CreateGroup/CreateGroup";
+import GroupMain from "./components/GroupMain/GroupMain";
 
 const App: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const App: React.FC = () => {
         <Route path="/" Component={Home} />
         <Route path="/login" Component={Login} />
         <Route path="/signup" Component={Signup} />
-        <Route path="/home" Component={CreateGroup} />
+        <Route path="/home" Component={GroupMain} />
       </Routes>
     </>
   );

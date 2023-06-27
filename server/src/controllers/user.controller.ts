@@ -10,8 +10,8 @@ const getDetail = (req: Request, res: Response) => {
       email: user?.get("email"),
     };
     res.status(200).send({
-        success:true,
-        data
+      success: true,
+      data,
     });
   });
 };
