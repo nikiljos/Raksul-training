@@ -1,11 +1,26 @@
 import "./HistoryCard.css";
 
-function HistoryCard() {
+type Props = {
+  name: string;
+  date: string;
+};
+
+function HistoryCard({ name, date }: Props) {
+  function formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    };
+    return date.toLocaleDateString("en-IN", options);
+  }
+
   return (
     <div className="history-card">
       <div className="hc-content">
-        <div className="title">Dubai Trip</div>
-        <div className="date">11 Jan, 2023</div>
+        <div className="title">{name}</div>
+        <div className="date">{formatDate(date)}</div>
       </div>
       <div className="hc-btn-container">
         <div className="hc-btn share">
