@@ -8,6 +8,7 @@ const createGroup = (req: Request, res: Response) => {
   res.status(200).send({
     success: true,
     invite_code: invite_code,
+    groupName,
     message: "Group created successfully",
   });
 };

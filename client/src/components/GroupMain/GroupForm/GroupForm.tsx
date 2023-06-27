@@ -10,6 +10,7 @@ type Props = {
 type popupData = {
   message: string;
   invite_code: string;
+  groupName: string;
 };
 
 function GroupForm({ endpoint, createGroup }: Props) {
@@ -35,6 +36,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
           setPopupData({
             message: data.message,
             invite_code: data.invite_code,
+            groupName: data.groupName,
           });
           setShowPopup(true);
         }
@@ -50,6 +52,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
         <SuccessPopup
           message={popupData?.message as string}
           invite_code={popupData?.invite_code as string}
+          groupName={popupData?.groupName as string}
         />
       )}
       <form action="/" method="POST" className="create-group-form">
