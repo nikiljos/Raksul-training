@@ -34,30 +34,6 @@
   margin-bottom: 10px;
 }
 
-/* .members-input-box {
-    display: flex;
-    border-radius: 10px;
-    border: 2px solid #000;
-    margin-bottom: 10px;
-  }
-  
-  .members-input-box input {
-    border: none;
-    border-radius: 10px 0 0 10px;
-  }
-  
-  .member-add-btn {
-    border-radius: 0px 8px 8px 0px;
-    background: #ffcd44;
-  
-    padding: 10px 20px;
-  
-    color: #000;
-    font-size: 20px;
-    font-family: Poppins;
-    font-weight: 700;
-  } */
-
 .get-started-btn {
   border-radius: 0px 0px 15px 15px;
   background: #ffcd44;

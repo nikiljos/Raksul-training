@@ -65,53 +65,15 @@ function GroupForm({ endpoint, createGroup }: Props) {
           </label>
           <input
             onChange={(e) => {
-              // setGroupData({
-              //   ...groupData,
-              //   groupName: e.target.value,
-              // } as groupData);
               setGroupInfo(e.target.value);
             }}
             type="text"
             name="group-info"
             id="group-info"
-            // value={groupData.groupName as string}
             value={groupInfo as string}
             placeholder={createGroup ? "Dubai Trip" : "25BH3210"}
           />
         </div>
-        {/* <div className="form-item">
-            <label htmlFor="members-name">Member Name</label>
-            <div className="members-field">
-              <div className="members-input-box">
-                <input
-                  type="text"
-                  onChange={(e) => {
-                    setMemberName(e.target.value);
-                  }}
-                  name="group-name"
-                  id="group-name"
-                  // value={formValues.name}
-                  placeholder="John Doe"
-                />
-                <button
-                  className="member-add-btn"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setGroupData({
-                      ...groupData,
-                      membersList: [
-                        ...groupData.membersList,
-                        memberName ? memberName : null,
-                      ],
-                    } as groupData);
-                  }}
-                >
-                  Add
-                </button>
-              </div>
-              <MembersList groupData={groupData} setGroupData={setGroupData} />
-            </div>
-          </div> */}
         <button
           type="submit"
           className="get-started-btn"
