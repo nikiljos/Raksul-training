@@ -20,7 +20,8 @@
     "google-auth-library": "^8.8.0",
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.4.0",
-    "sequelize": "^6.32.1"
+    "sequelize": "^6.32.1",
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",

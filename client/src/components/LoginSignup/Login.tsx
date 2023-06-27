@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from "react";
 import "./LoginSignup.css";
 import { Link } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
+import GAuthLogin from "./GAuthLogin";
 
 type FormValues = {
   email: string;
@@ -55,29 +55,11 @@ function Login() {
   };
 
   useEffect(() => {
-    console.log(Object.values(formErrors));
     if (Object.values(formErrors).length === 0 && isSubmit) {
       console.log("object");
     }
   }, [formErrors, isSubmit, formValues]);
 
-  const handleGoogleLoginSuccess = (tokenId: any) => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tokenId: tokenId }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) setIsSubmit(true);
-        console.log("Message:", data);
-      })
-      .catch((error) => {
-        console.error("Backend request failed:", error);
-      });
-  };
   return (
     <div className="login-container">
       <h1 className="login-heading">
@@ -124,12 +106,7 @@ function Login() {
         </div>
         {/* Google Login Button */}
         <div className="google-login-btn">
-          <GoogleLogin
-            onSuccess={handleGoogleLoginSuccess}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          />
+          <GAuthLogin />
         </div>
       </form>
       <div className="dontHaveAccount">

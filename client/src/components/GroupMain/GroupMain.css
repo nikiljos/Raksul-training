@@ -1,0 +1,16 @@
+.group-main-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+
+  padding: 100px 30px;
+}
+
+.group-main-left,
+.group-main-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+}

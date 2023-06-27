@@ -5,7 +5,7 @@ const getAuthToken = async (payload: any) => {
   const { email, name, picture } = payload;
 
   // Create the user if it doesn't exist
-  let user = await createUserIfNotExists(email, name, picture || null);
+  let user = await createUserIfNotExists(email, name, picture);
   const sub = user.get("id");
   // Generate a JWT
   const token: string = jwtUtils.signToken({ sub });
