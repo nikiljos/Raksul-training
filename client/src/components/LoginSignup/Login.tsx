@@ -2,6 +2,9 @@ import React, { FormEvent, useEffect, useState } from "react";
 import "./LoginSignup.css";
 import { Link } from "react-router-dom";
 import GAuthLogin from "./GAuthLogin";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { unsetUser } from "./AuthSlice";
+// import { useSelector } from "react-redux";
 
 type FormValues = {
   email: string;
@@ -54,13 +57,21 @@ function Login() {
     return errors;
   };
 
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    dispatch(unsetUser());
+  };
+
   useEffect(() => {
     if (Object.values(formErrors).length === 0 && isSubmit) {
       console.log("object");
     }
   }, [formErrors, isSubmit, formValues]);
 
-  return (
+  return !auth.token ? (
     <div className="login-container">
       <h1 className="login-heading">
         <span className="yellow-text">Log In</span> to start
@@ -112,6 +123,15 @@ function Login() {
       <div className="dontHaveAccount">
         Don't have an account? <Link to="/signup">Sign up</Link>
       </div>
+    </div>
+  ) : (
+    <div className="flex-center">
+      <Link to="/home" className="space">
+        View Dashboard
+      </Link>
+      <button className="primary-btn full form-btn space" onClick={logout}>
+        Log Out <img src="./images/arrow-right.svg" alt="" />
+      </button>
     </div>
   );
 }

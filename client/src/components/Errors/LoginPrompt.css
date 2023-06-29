@@ -1,0 +1,10 @@
+.LoginPrompt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.LoginPrompt h1{
+    font-size: 4rem;
+    margin: 50px;
+}

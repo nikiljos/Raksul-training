@@ -2,33 +2,37 @@ import { useEffect } from "react";
 import NavButton from "./NavButton/NavButton";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { setToken, setUser, unsetUser } from "../LoginSignup/AuthSlice";
 
 function Navbar() {
-  function getUserDetails() {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/detail`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          localStorage.setItem("username", data.data.name);
-          localStorage.setItem("email", data.data.email);
-          localStorage.setItem("uid", data.data.id);
-        }
-        console.log("Message:", data);
-      })
-      .catch((error) => {
-        console.error("Couldn't get user details:", error);
-      });
-  }
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getUserDetails();
-  }, []);
+    function getUserDetails() {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/user/detail`, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          let { name, email, id } = data.data;
+          dispatch(setUser({ id, name, email, image: "" }));
+        })
+        .catch((error) => {
+          console.error("Couldn't get user details:", error);
+          dispatch(unsetUser());
+        });
+    }
+
+    let oldToken = localStorage.getItem("access_token");
+    oldToken && dispatch(setToken(oldToken));
+    auth.token && getUserDetails();
+  }, [auth.token, dispatch]);
 
   return (
     <div className="navbar">
@@ -38,7 +42,7 @@ function Navbar() {
         </Link>
       </div>
       <div className="nav-links">
-        <Link to={"/history"}>Previous Records</Link>
+        {auth.token ? <Link to={"/history"}>Previous Records</Link> : null}
         <NavButton />
       </div>
     </div>
