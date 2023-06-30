@@ -1,0 +1,47 @@
+.input-container .create-group-form {
+  padding: 60px 40px;
+}
+
+.input-container .create-group-form .get-started-btn {
+  margin-bottom: -60px;
+}
+
+.create-group-form .amount-box .amt-input {
+  border: none;
+  margin: 0;
+}
+
+.create-group-form .amount-box {
+  border-radius: 10px;
+  border: 2px solid #000;
+  background: #fff;
+
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.create-group-form .amt-symbol {
+  color: #000;
+  font-size: 20px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px 0px 0px 8px;
+  background: #ffcd44;
+
+  padding: 10px 13px;
+}
+
+.check-box-container .cb-box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  gap: 20px;
+}

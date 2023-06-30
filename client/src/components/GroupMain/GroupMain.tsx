@@ -6,9 +6,9 @@ import { useAppSelector } from "../../hooks";
 import LoginPrompt from "../Errors/LoginPrompt";
 
 function GroupMain() {
-  const auth=useAppSelector(state=>state.auth)
-  return (
-    auth.token?<div className="group-main-container">
+  const auth = useAppSelector((state) => state.auth);
+  return auth.token ? (
+    <div className="group-main-container">
       <div className="group-form-container">
         <div className="group-form-left">
           <GroupForm endpoint="group/create" createGroup={true} />
@@ -23,7 +23,9 @@ function GroupMain() {
           View More
         </Link>
       </div>
-    </div>:<LoginPrompt/>
+    </div>
+  ) : (
+    <LoginPrompt />
   );
 }
 

@@ -1,0 +1,19 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+
+  gap: 10px;
+
+  position: relative;
+}
+
+.check-box-container .checkbox input {
+  margin: 0;
+  width: 22px;
+
+  accent-color: #ffcd44;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background: #ffcd44;
+}

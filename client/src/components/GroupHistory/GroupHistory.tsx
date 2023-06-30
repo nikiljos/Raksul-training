@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./GroupHistory.css";
 import HistoryCard from "./HistoryCard/HistoryCard";
+import { useAppSelector } from "../../hooks";
 
 type historyData = {
   id: number;
@@ -15,12 +16,12 @@ type Props = {
 function GroupHistory({ limit }: Props) {
   const [historyData, setHistoryData] = useState<Array<historyData>>([]);
 
+  const { user } = useAppSelector((state) => state.auth);
+
   useEffect(() => {
     async function getHistory() {
       await fetch(
-        `${
-          process.env.REACT_APP_SERVER_URL
-        }/api/group/history/${localStorage.getItem("uid")}`
+        `${process.env.REACT_APP_SERVER_URL}/api/group/history/${user.id}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -36,7 +37,7 @@ function GroupHistory({ limit }: Props) {
         });
     }
     getHistory();
-  }, [limit]);
+  }, [limit, user.id]);
 
   return (
     <div className="group-history">

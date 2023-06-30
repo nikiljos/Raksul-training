@@ -108,7 +108,7 @@ function Login() {
         </div>
         <p>{formErrors.password}</p>
         <button className="primary-btn full form-btn">
-          Log In <img src="./images/arrow-right.svg" alt="" />
+          Log In <img src="/images/arrow-right.svg" alt="" />
         </button>
         <div className="form-divider">
           <div className="dividing-line"></div>
@@ -130,7 +130,7 @@ function Login() {
         View Dashboard
       </Link>
       <button className="primary-btn full form-btn space" onClick={logout}>
-        Log Out <img src="./images/arrow-right.svg" alt="" />
+        Log Out <img src="/images/arrow-right.svg" alt="" />
       </button>
     </div>
   );

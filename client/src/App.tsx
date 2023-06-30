@@ -5,6 +5,7 @@ import Login from "./components/LoginSignup/Login";
 import Signup from "./components/LoginSignup/Signup";
 import GroupMain from "./components/GroupMain/GroupMain";
 import GroupHistory from "./components/GroupHistory/GroupHistory";
+import InputPage from "./components/InputPage/InputPage";
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FC = () => {
         <Route path="/signup" Component={Signup} />
         <Route path="/home" Component={GroupMain} />
         <Route path="/history" Component={GroupHistory} />
+        <Route path="/group/:id" Component={InputPage} />
       </Routes>
     </>
   );

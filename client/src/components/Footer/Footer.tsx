@@ -5,7 +5,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-logo">
-          <img src="./images/cashcut-logo-white.svg" alt="CashCut" />
+          <img src="/images/cashcut-logo-white.svg" alt="CashCut" />
         </div>
         <div className="footer-text">
           CashCut | All Rights Reserved | © 2023
@@ -18,7 +18,7 @@ function Footer() {
         className="contribute-btn"
       >
         <img
-          src="./images/github-logo.svg"
+          src="/images/github-logo.svg"
           alt="Github"
           className="github-logo"
         />

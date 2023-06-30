@@ -38,7 +38,7 @@ function Navbar() {
     <div className="navbar">
       <div className="nav-logo">
         <Link to="/home">
-          <img src="./images/cashcut-logo.svg" alt="CashCut" />
+          <img src="/images/cashcut-logo.svg" alt="CashCut" />
         </Link>
       </div>
       <div className="nav-links">
