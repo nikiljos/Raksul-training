@@ -24,13 +24,13 @@ function HistoryCard({ name, date }: Props) {
       </div>
       <div className="hc-btn-container">
         <div className="hc-btn share">
-          <img src="./images/share.svg" alt="Share" />
+          <img src="/images/share.svg" alt="Share" />
         </div>
         <div className="hc-btn view">
-          <img src="./images/view.svg" alt="View" />
+          <img src="/images/view.svg" alt="View" />
         </div>
         <div className="hc-btn file">
-          <img src="./images/file.svg" alt="Export" />
+          <img src="/images/file.svg" alt="Export" />
         </div>
       </div>
     </div>

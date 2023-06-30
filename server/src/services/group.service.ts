@@ -2,15 +2,23 @@ import Group from "../models/group.model";
 // import uniqid from "uniqid";
 var uniqid = require("uniqid");
 
+type group_data = {
+  [key: string]: any;
+};
+
 const createGroup = async (groupData: {
   groupName: string | null;
   admin: number;
   invite_code: string;
 }) => {
   const { groupName, admin, invite_code } = groupData;
-  console.log(groupData);
   try {
-    const group = await Group.create({ name: groupName, admin, invite_code });
+    const group: group_data = await Group.create({
+      name: groupName,
+      admin,
+      invite_code,
+    });
+    return group.dataValues;
   } catch (error) {
     console.log("error, ", error);
     throw new Error("Error creating group");

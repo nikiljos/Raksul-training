@@ -1,0 +1,9 @@
+.input-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  padding: 50px 80px;
+  padding-bottom: 0;
+  /* gap: 100px; */
+}

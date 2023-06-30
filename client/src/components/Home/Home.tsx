@@ -20,7 +20,7 @@ function Home() {
           <button className="hero-cta btn-primary">Get Started</button>
         </div>
         <div className="home-hero-right">
-          <img src="./images/hero-img.png" alt="" />
+          <img src="/images/hero-img.png" alt="" />
         </div>
       </div>
       <div className="home-working">

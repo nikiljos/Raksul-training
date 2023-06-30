@@ -114,7 +114,7 @@ function Signup() {
         </div>
         <p>{formErrors.password}</p>
         <button className="primary-btn full form-btn">
-          Sign Up <img src="./images/arrow-right.svg" alt="" />
+          Sign Up <img src="/images/arrow-right.svg" alt="" />
         </button>
       </form>
       <div className="dontHaveAccount">

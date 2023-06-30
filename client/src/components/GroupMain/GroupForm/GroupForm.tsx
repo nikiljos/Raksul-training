@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import "./GroupForm.css";
 import SuccessPopup from "../SuccessPopup/SuccessPopup";
+import { useAppSelector } from "../../../hooks";
 
 type Props = {
   endpoint: string;
@@ -9,14 +10,17 @@ type Props = {
 
 type popupData = {
   message: string;
-  invite_code: string;
-  groupName: string;
+  group_data: group_data;
 };
+
+type group_data = { id: string; name: string; invite_code: string };
 
 function GroupForm({ endpoint, createGroup }: Props) {
   const [groupInfo, setGroupInfo] = useState<string | null>();
   const [popupData, setPopupData] = useState<popupData>();
   const [showPopup, setShowPopup] = useState<boolean>();
+
+  const { user } = useAppSelector((state) => state.auth);
 
   function onSubmitHandler(e: FormEvent) {
     e.preventDefault();
@@ -27,16 +31,16 @@ function GroupForm({ endpoint, createGroup }: Props) {
       },
       body: JSON.stringify({
         groupName: groupInfo,
-        admin: localStorage.getItem("uid"),
+        admin: user.id,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          console.log(data);
           setPopupData({
             message: data.message,
-            invite_code: data.invite_code,
-            groupName: data.groupName,
+            group_data: data.group_data,
           });
           setShowPopup(true);
         }
@@ -51,8 +55,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
       {showPopup && (
         <SuccessPopup
           message={popupData?.message as string}
-          invite_code={popupData?.invite_code as string}
-          groupName={popupData?.groupName as string}
+          group_data={popupData?.group_data as group_data}
         />
       )}
       <form action="/" method="POST" className="create-group-form">
