@@ -6,11 +6,13 @@ type group_data = {
   [key: string]: any;
 };
 
-const createGroup = async (groupData: {
+type groupData = {
   groupName: string | null;
   admin: number;
   invite_code: string;
-}) => {
+};
+
+const createGroup = async (groupData: groupData) => {
   const { groupName, admin, invite_code } = groupData;
   try {
     const group: group_data = await Group.create({

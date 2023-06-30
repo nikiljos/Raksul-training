@@ -3,29 +3,36 @@ import "./CheckBox.css";
 type Props = {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
-  value: string;
+  benefactor_name: string;
+  benefactor_id: number;
 };
 
 type FormData = {
   spender: number;
   payment_of: string;
   amount: number;
-  benefactors: Array<Number | String>;
+  benefactor: Array<Number>;
+  group: number;
 };
 
-function CheckBox({ formData, setFormData, value }: Props) {
+function CheckBox({
+  formData,
+  setFormData,
+  benefactor_id,
+  benefactor_name,
+}: Props) {
   function handleOnCheck(e: React.ChangeEvent<HTMLInputElement>): void {
     const { checked, value } = e.target;
-    if (!formData.benefactors.includes(value))
+    if (!formData.benefactor.includes(Number(value)))
       setFormData({
         ...formData,
-        benefactors: [...formData.benefactors, value],
+        benefactor: [...formData.benefactor, Number(value)],
       });
     else if (!checked)
       setFormData({
         ...formData,
-        benefactors: formData.benefactors.filter((e) => {
-          return e !== value;
+        benefactor: formData.benefactor.filter((e) => {
+          return e !== Number(value);
         }),
       });
   }
@@ -36,11 +43,11 @@ function CheckBox({ formData, setFormData, value }: Props) {
           handleOnCheck(e);
         }}
         type="checkbox"
-        name={value}
-        id={value}
-        value={value}
+        name={benefactor_name}
+        id={benefactor_name}
+        value={benefactor_id}
       />
-      <label htmlFor={value}>{value}</label>
+      <label htmlFor={benefactor_name}>{benefactor_name}</label>
     </div>
   );
 }
