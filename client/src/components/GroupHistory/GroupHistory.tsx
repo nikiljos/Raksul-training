@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import "./GroupHistory.css";
 import HistoryCard from "./HistoryCard/HistoryCard";
 import { useAppSelector } from "../../hooks";
+import { useQuery } from "@tanstack/react-query";
 
-type historyData = {
+type HistoryData = {
   id: number;
   name: string;
   createdAt: string;
@@ -14,45 +14,39 @@ type Props = {
 };
 
 function GroupHistory({ limit }: Props) {
-  const [historyData, setHistoryData] = useState<Array<historyData>>([]);
-
-  const { user } = useAppSelector((state) => state.auth);
-
-  useEffect(() => {
-    async function getHistory() {
-      await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/group/history/${user.id}`
-      )
+  const auth = useAppSelector((state) => state.auth);
+  const { isLoading, error, data:historyData } = useQuery({
+    queryKey: ["history",auth,limit],
+    queryFn: () =>
+      auth.user.id?fetch(`${process.env.REACT_APP_SERVER_URL}/api/group/history/${auth.user.id}`)
         .then((res) => res.json())
-        .then((data) => {
-          if (limit) {
-            const recentThree: Array<historyData> = [];
-            data.data.forEach((e: historyData, i: number) => {
-              if (i < limit) {
-                recentThree.push(e);
-              }
-            });
-            setHistoryData(recentThree);
-          } else setHistoryData(data.data);
-        });
-    }
-    getHistory();
-  }, [limit, user.id]);
+        .then((data) => data.data&&data.data?.slice(0,limit||100) as HistoryData[]):[],
+  });
 
   return (
     <div className="group-history">
       <h1 className="history-heading">Your Previous Records</h1>
-      <div className="history-cards-container">
-        {historyData?.length > 0 &&
-          historyData.map((item) => {
-            return (
-              <HistoryCard
-                key={item.id}
-                name={item.name}
-                date={item.createdAt}
-              />
-            );
-          })}
+      <div>
+        {isLoading ? (
+          <h3>Loading</h3>
+        ) : error ? (
+          <div>
+            <h3>Error</h3>
+            <div>{error.toString()}</div>
+          </div>
+        ) : 
+        <div className="history-cards-container">
+          {
+            historyData?.length>0?historyData.map((item: HistoryData) => {
+              return (
+                <HistoryCard
+                  key={item.id}
+                  name={item.name}
+                  date={item.createdAt}
+                />
+              );
+            }):<h3>No Groups found</h3>}
+        </div>}
       </div>
     </div>
   );

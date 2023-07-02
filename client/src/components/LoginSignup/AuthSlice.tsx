@@ -21,6 +21,7 @@ const authSlice = createSlice({
       state.user = action.payload;
     },
     unsetUser: (state) => {
+      localStorage.removeItem("access_token")
       state.token = null;
       state.user = authInitial.user;
     },

@@ -11,9 +11,11 @@ import { init } from "./config/db.config";
 init(); //db connect
 
 import router from "./routers";
+import errorHandler from "./middlewares/error.middleware";
 
 app.use(cors());
 app.use("/api", router);
+app.use(errorHandler)
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
