@@ -18,7 +18,7 @@ const Transaction = db.define(
       allowNull: false,
     },
     benefactor: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
+      type: DataTypes.ARRAY(DataTypes.INTEGER), //impossible in mysql, need to change
     },
     amount: {
       type: DataTypes.NUMBER,
