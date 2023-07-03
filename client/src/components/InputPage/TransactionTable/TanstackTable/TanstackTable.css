@@ -1,0 +1,30 @@
+.tanstack-table {
+  border: 1px solid #5b5b5b;
+  background: #eee;
+
+  color: #000;
+  text-align: left;
+  font-size: 16px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 400;
+
+  border-collapse: collapse;
+}
+
+.tanstack-table thead {
+  border-top: 1px solid #5b5b5b;
+  border-left: 1px solid #5b5b5b;
+  background: #ffcd44;
+  font-size: 20px;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tanstack-table td,
+th {
+  padding: 15px 20px;
+  border-top: 1px solid #5b5b5b;
+  border-left: 1px solid #5b5b5b;
+}

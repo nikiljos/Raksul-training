@@ -13,13 +13,14 @@ const Transaction = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    payment_of: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     spender: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    // benefactor: {
-    //   type: DataTypes.ARRAY(DataTypes.INTEGER), //impossible in mysql, need to change
-    // },
     benefactor: {
       type: DataTypes.TEXT, // or DataTypes.STRING
       allowNull: false, // or false if it's a required field

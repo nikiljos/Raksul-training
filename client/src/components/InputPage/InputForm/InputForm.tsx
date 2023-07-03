@@ -25,7 +25,6 @@ function InputForm() {
   };
 
   const [formData, setFormData] = useState<FormData>(initialValues);
-  console.log(formData);
 
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -106,19 +105,19 @@ function InputForm() {
             formData={formData}
             setFormData={setFormData}
             benefactor_name="Raju"
-            benefactor_id={4431224}
+            benefactor_id={13}
           />
           <CheckBox
             formData={formData}
             setFormData={setFormData}
-            benefactor_name="Nikhil"
-            benefactor_id={4243224}
+            benefactor_name="Techy"
+            benefactor_id={14}
           />
           <CheckBox
             formData={formData}
             setFormData={setFormData}
-            benefactor_name="Someone"
-            benefactor_id={4436224}
+            benefactor_name="Photo"
+            benefactor_id={15}
           />
         </div>
       </div>
