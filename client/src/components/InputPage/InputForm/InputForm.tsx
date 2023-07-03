@@ -14,6 +14,7 @@ type FormData = {
 
 function InputForm() {
   const { user } = useAppSelector((state) => state.auth);
+
   const params = useParams();
   const initialValues: FormData = {
     spender: user.id!,
@@ -27,9 +28,8 @@ function InputForm() {
   console.log(formData);
 
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!formData.spender) setFormData({ ...formData, spender: user.id! });
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value, spender: user.id! });
   }
 
   function onSubmitHandler() {

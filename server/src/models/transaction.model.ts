@@ -17,15 +17,29 @@ const Transaction = db.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    // benefactor: {
+    //   type: DataTypes.ARRAY(DataTypes.INTEGER), //impossible in mysql, need to change
+    // },
     benefactor: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER), //impossible in mysql, need to change
+      type: DataTypes.TEXT, // or DataTypes.STRING
+      allowNull: false, // or false if it's a required field
+      get() {
+        const value = this.getDataValue("benefactor");
+        return value ? value.split(",") : [];
+      },
+      set(value) {
+        this.setDataValue(
+          "benefactor",
+          Array.isArray(value) ? value.join(",") : value
+        );
+      },
     },
     amount: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     individualShare: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
   },
