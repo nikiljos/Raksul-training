@@ -7,6 +7,7 @@ type HistoryData = {
   id: number;
   name: string;
   createdAt: string;
+  invite_code: string;
 };
 
 type Props = {
@@ -15,12 +16,24 @@ type Props = {
 
 function GroupHistory({ limit }: Props) {
   const auth = useAppSelector((state) => state.auth);
-  const { isLoading, error, data:historyData } = useQuery({
-    queryKey: ["history",auth,limit],
+  const {
+    isLoading,
+    error,
+    data: historyData,
+  } = useQuery({
+    queryKey: ["history", auth, limit],
     queryFn: () =>
-      auth.user.id?fetch(`${process.env.REACT_APP_SERVER_URL}/api/group/history/${auth.user.id}`)
-        .then((res) => res.json())
-        .then((data) => data.data&&data.data?.slice(0,limit||100) as HistoryData[]):[],
+      auth.user.id
+        ? fetch(
+            `${process.env.REACT_APP_SERVER_URL}/api/group/history/${auth.user.id}`
+          )
+            .then((res) => res.json())
+            .then(
+              (data) =>
+                data.data &&
+                (data.data?.slice(0, limit || 100) as HistoryData[])
+            )
+        : [],
   });
 
   return (
@@ -34,19 +47,25 @@ function GroupHistory({ limit }: Props) {
             <h3>Error</h3>
             <div>{error.toString()}</div>
           </div>
-        ) : 
-        <div className="history-cards-container">
-          {
-            historyData?.length>0?historyData.map((item: HistoryData) => {
-              return (
-                <HistoryCard
-                  key={item.id}
-                  name={item.name}
-                  date={item.createdAt}
-                />
-              );
-            }):<h3>No Groups found</h3>}
-        </div>}
+        ) : (
+          <div className="history-cards-container">
+            {historyData?.length > 0 ? (
+              historyData.map((item: HistoryData) => {
+                return (
+                  <HistoryCard
+                    key={item.id}
+                    invite_code={item.invite_code}
+                    id={item.id}
+                    name={item.name}
+                    date={item.createdAt}
+                  />
+                );
+              })
+            ) : (
+              <h3>No Groups found</h3>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

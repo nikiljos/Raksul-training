@@ -4,14 +4,16 @@ import TransactionTable from "./TransactionTable/TransactionTable";
 
 function InputPage() {
   return (
-    <div className="input-container">
-      <div className="input-left">
-        <InputForm />
+    <>
+      <div className="input-container">
+        <div className="input-left">
+          <InputForm />
+        </div>
+        <div className="input-right">
+          <TransactionTable />
+        </div>
       </div>
-      <div className="input-right">
-        <TransactionTable />
-      </div>
-    </div>
+    </>
   );
 }
 

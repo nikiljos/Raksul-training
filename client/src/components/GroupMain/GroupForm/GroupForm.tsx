@@ -1,7 +1,8 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import "./GroupForm.css";
 import SuccessPopup from "../SuccessPopup/SuccessPopup";
 import { useAppSelector } from "../../../hooks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   endpoint: string;
@@ -21,35 +22,38 @@ function GroupForm({ endpoint, createGroup }: Props) {
   const [showPopup, setShowPopup] = useState<boolean>();
 
   const { user } = useAppSelector((state) => state.auth);
+  const queryClient = useQueryClient();
 
-  function onSubmitHandler(e: FormEvent) {
-    e.preventDefault();
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        groupName: groupInfo,
-        admin: user.id,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          console.log(data);
-          setPopupData({
-            message: data.message,
-            group_data: data.group_data,
-          });
-          setShowPopup(true);
-        }
-        console.log("Message:", data);
-      })
-      .catch((error) => {
-        console.error("Backend request failed:", error);
-      });
+  async function onSubmitHandler() {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/${endpoint}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          groupName: groupInfo,
+          admin: user.id,
+        }),
+      }
+    );
+    return res.json();
   }
+
+  const groupMutation = useMutation(onSubmitHandler, {
+    onSuccess: (data) => {
+      if (data.success) {
+        setPopupData({
+          message: data.message,
+          group_data: data.group_data,
+        });
+        setShowPopup(true);
+
+        queryClient.invalidateQueries(["history"]);
+      }
+    },
+  });
   return (
     <>
       {showPopup && (
@@ -58,7 +62,14 @@ function GroupForm({ endpoint, createGroup }: Props) {
           group_data={popupData?.group_data as group_data}
         />
       )}
-      <form action="/" method="POST" className="create-group-form">
+      <form
+        method="POST"
+        className="create-group-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+          groupMutation.mutate();
+        }}
+      >
         <h2 className="create-group-heading">
           {createGroup ? "Create a New Group" : "Join a Group"}
         </h2>
@@ -80,7 +91,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
         <button
           type="submit"
           className="get-started-btn"
-          onClick={(e) => onSubmitHandler(e)}
+          // onClick={(e) => onSubmitHandler(e)}
         >
           {createGroup ? "Get Started" : "Join the Group"}
         </button>

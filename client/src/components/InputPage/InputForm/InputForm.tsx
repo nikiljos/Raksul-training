@@ -1,9 +1,10 @@
 import "./InputForm.css";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-
 import { useAppSelector } from "../../../hooks";
 import CheckBox from "../CheckBox/CheckBox";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 type FormData = {
   spender: number;
   payment_of: string;
@@ -14,6 +15,7 @@ type FormData = {
 
 function InputForm() {
   const { user } = useAppSelector((state) => state.auth);
+  const queryClient = useQueryClient();
 
   const params = useParams();
   const initialValues: FormData = {
@@ -31,27 +33,28 @@ function InputForm() {
     setFormData({ ...formData, [name]: value, spender: user.id! });
   }
 
-  function onSubmitHandler() {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/transaction/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        formData,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          console.log(data);
-        }
-        console.log("Message:", data);
-      })
-      .catch((error) => {
-        console.error("Backend request failed:", error);
-      });
+  async function onSubmitHandler() {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/transaction/add`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          formData,
+        }),
+      }
+    );
+    return res.json();
   }
+
+  const transactionMutation = useMutation(onSubmitHandler, {
+    onSuccess: (data) => {
+      if (data.success) queryClient.invalidateQueries(["getTransactionData"]);
+    },
+  });
+
   return (
     <form
       action="/"
@@ -59,7 +62,7 @@ function InputForm() {
       className="create-group-form"
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmitHandler();
+        transactionMutation.mutate();
       }}
     >
       <div className="form-item">

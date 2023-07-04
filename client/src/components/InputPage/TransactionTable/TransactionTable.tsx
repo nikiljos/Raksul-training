@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import "./TransactionTable.css";
 import { useEffect, useState } from "react";
 import TanstackTable from "./TanstackTable/TanstackTable";
+import { useQuery } from "@tanstack/react-query";
 
 export type Transaction = {
   spender: number;
@@ -16,25 +17,31 @@ function TransactionTable() {
   const [transactionData, setTransactionData] = useState<Transaction[]>();
   const [isLoaded, setIsLoaded] = useState<Boolean>(false);
 
-  useEffect(() => {
-    const getTransactions = async (groupId: number = Number(params.id)) => {
-      await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${groupId}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setTransactionData(data.transaction_data);
-          setIsLoaded(true);
-        });
-    };
+  const fetchTransactionData = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${params.id}`
+    );
+    return res.json();
+  };
 
-    getTransactions();
-  }, [params]);
+  const { data, status } = useQuery(
+    ["getTransactionData"],
+    fetchTransactionData
+  );
+
+  useEffect(() => {
+    if (status === "success") {
+      setTransactionData(data.transaction_data);
+      setIsLoaded(true);
+    }
+  }, [status, data]);
 
   return (
     <div>
-      {isLoaded && (
+      {isLoaded ? (
         <TanstackTable transactionData={transactionData as Transaction[]} />
+      ) : (
+        <h1 className="loading-text">Loading...</h1>
       )}
     </div>
   );
