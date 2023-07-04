@@ -14,6 +14,7 @@ type FormData = {
 
 function InputForm() {
   const { user } = useAppSelector((state) => state.auth);
+
   const params = useParams();
   const initialValues: FormData = {
     spender: user.id!,
@@ -24,12 +25,10 @@ function InputForm() {
   };
 
   const [formData, setFormData] = useState<FormData>(initialValues);
-  console.log(formData);
 
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!formData.spender) setFormData({ ...formData, spender: user.id! });
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value, spender: user.id! });
   }
 
   function onSubmitHandler() {
@@ -106,19 +105,19 @@ function InputForm() {
             formData={formData}
             setFormData={setFormData}
             benefactor_name="Raju"
-            benefactor_id={4431224}
+            benefactor_id={13}
           />
           <CheckBox
             formData={formData}
             setFormData={setFormData}
-            benefactor_name="Nikhil"
-            benefactor_id={4243224}
+            benefactor_name="Techy"
+            benefactor_id={14}
           />
           <CheckBox
             formData={formData}
             setFormData={setFormData}
-            benefactor_name="Someone"
-            benefactor_id={4436224}
+            benefactor_name="Photo"
+            benefactor_id={15}
           />
         </div>
       </div>

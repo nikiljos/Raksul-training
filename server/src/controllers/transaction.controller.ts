@@ -13,10 +13,21 @@ const addTransaction = async (req: Request, res: Response) => {
   res.status(200).send({
     success: true,
     group_data,
-    message: "Group created successfully",
+    message: "Transaction created successfully",
+  });
+};
+
+const getTransaction = async (req: Request, res: Response) => {
+  const groupId: number = Number(req.params.id);
+  const transaction_data = await transactionService.getTransaction(groupId);
+  res.status(200).send({
+    success: true,
+    transaction_data,
+    message: "Transaction fetched successfully",
   });
 };
 
 export default {
   addTransaction,
+  getTransaction,
 };
