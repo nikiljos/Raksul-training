@@ -1,7 +1,9 @@
 import "./App.css";
-import CounterWithTLK from "./components/ReduxToolkit/CounterWithTLK";
-import { Provider } from "react-redux";
-import { store } from "./components/ReduxToolkit/store";
+import JsonATA from "./components/jsonATA/JsonATA";
+
+// import CounterWithTLK from "./components/ReduxToolkit/CounterWithTLK";
+// import { Provider } from "react-redux";
+// import { store } from "./components/ReduxToolkit/store";
 
 // import CounterApp from "./components/Redux/CounterApp";
 // import { store } from "./components/Redux/store";
@@ -16,9 +18,10 @@ function App() {
       {/* <Provider store={store}>
         <CounterApp />
       </Provider> */}
-      <Provider store={store}>
+      {/* <Provider store={store}>
         <CounterWithTLK />
-      </Provider>
+      </Provider> */}
+      <JsonATA />
     </div>
   );
 }
