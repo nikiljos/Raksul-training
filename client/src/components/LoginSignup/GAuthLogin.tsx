@@ -1,32 +1,37 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { useAppDispatch } from "../../hooks";
 import { setToken } from "./AuthSlice";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 function GAuthLogin() {
   const dispatch = useAppDispatch();
-  const handleGoogleLoginSuccess = (tokenId: any) => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/auth/google`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ tokenId: tokenId }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          localStorage.setItem("access_token", data.data.authToken);
-          dispatch(setToken(data.data.authToken));
-        }
-        console.log("Message:", data);
-      })
-      .catch((error) => {
-        console.error("Backend request failed:", error);
-      });
+  const queryClient = useQueryClient();
+  const handleGoogleLoginSuccess = async (tokenId: any) => {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/google`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tokenId: tokenId }),
+      }
+    );
+    return res.json();
   };
+
+  const authMutate = useMutation(handleGoogleLoginSuccess, {
+    onSuccess: (data) => {
+      if (data.success) {
+        localStorage.setItem("access_token", data.data.authToken);
+        dispatch(setToken(data.data.authToken));
+        queryClient.invalidateQueries(["userDetail"]);
+      }
+    },
+  });
   return (
     <GoogleLogin
-      onSuccess={handleGoogleLoginSuccess}
+      onSuccess={authMutate.mutate}
       onError={() => {
         console.log("Login Failed");
       }}

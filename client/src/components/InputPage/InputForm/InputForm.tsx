@@ -33,21 +33,25 @@ function InputForm() {
     setFormData({ ...formData, [name]: value, spender: user.id! });
   }
 
-  function onSubmitHandler() {
-    return fetch(`${process.env.REACT_APP_SERVER_URL}/api/transaction/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        formData,
-      }),
-    });
+  async function onSubmitHandler() {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/transaction/add`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          formData,
+        }),
+      }
+    );
+    return res.json();
   }
 
   const transactionMutation = useMutation(onSubmitHandler, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["getTransactionData"]);
+    onSuccess: (data) => {
+      if (data.success) queryClient.invalidateQueries(["getTransactionData"]);
     },
   });
 

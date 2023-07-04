@@ -43,13 +43,15 @@ function GroupForm({ endpoint, createGroup }: Props) {
 
   const groupMutation = useMutation(onSubmitHandler, {
     onSuccess: (data) => {
-      setPopupData({
-        message: data.message,
-        group_data: data.group_data,
-      });
-      setShowPopup(true);
+      if (data.success) {
+        setPopupData({
+          message: data.message,
+          group_data: data.group_data,
+        });
+        setShowPopup(true);
 
-      queryClient.invalidateQueries(["history"]);
+        queryClient.invalidateQueries(["history"]);
+      }
     },
   });
   return (
