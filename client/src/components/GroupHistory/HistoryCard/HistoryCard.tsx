@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
 import "./HistoryCard.css";
 
 type Props = {
   name: string;
+  id: number;
   date: string;
 };
 
-function HistoryCard({ name, date }: Props) {
+function HistoryCard({ name, id, date }: Props) {
   function formatDate(dateString: string): string {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
@@ -26,9 +28,9 @@ function HistoryCard({ name, date }: Props) {
         <div className="hc-btn share">
           <img src="/images/share.svg" alt="Share" />
         </div>
-        <div className="hc-btn view">
+        <Link to={`/group/${id}`} className="hc-btn view">
           <img src="/images/view.svg" alt="View" />
-        </div>
+        </Link>
         <div className="hc-btn file">
           <img src="/images/file.svg" alt="Export" />
         </div>
