@@ -7,6 +7,7 @@ type HistoryData = {
   id: number;
   name: string;
   createdAt: string;
+  invite_code: string;
 };
 
 type Props = {
@@ -53,6 +54,7 @@ function GroupHistory({ limit }: Props) {
                 return (
                   <HistoryCard
                     key={item.id}
+                    invite_code={item.invite_code}
                     id={item.id}
                     name={item.name}
                     date={item.createdAt}

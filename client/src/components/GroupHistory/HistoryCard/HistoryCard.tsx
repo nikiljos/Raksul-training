@@ -5,9 +5,10 @@ type Props = {
   name: string;
   id: number;
   date: string;
+  invite_code: string;
 };
 
-function HistoryCard({ name, id, date }: Props) {
+function HistoryCard({ name, id, date, invite_code }: Props) {
   function formatDate(dateString: string): string {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
@@ -22,6 +23,9 @@ function HistoryCard({ name, id, date }: Props) {
     <div className="history-card">
       <div className="hc-content">
         <div className="title">{name}</div>
+        <div className="invite-code">
+          <b>Code:</b> {invite_code}
+        </div>
         <div className="date">{formatDate(date)}</div>
       </div>
       <div className="hc-btn-container">
