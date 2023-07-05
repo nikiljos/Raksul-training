@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const JsonATA: React.FC = () => {
   const [data, setData] = useState<object[]>([]);
@@ -11,7 +11,7 @@ const JsonATA: React.FC = () => {
   ];
 
   function fetchData() {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/data`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/jsonATA`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

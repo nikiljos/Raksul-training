@@ -36,12 +36,15 @@ export async function checkGAuth(
   }
 }
 
-export const checkUser=(req:Request,res:Response,next:NextFunction)=>{
-  if(!req.headers.authorization||typeof req.headers.authorization!=="string"){
-      return next(new Error("Invalid Auth Header"))
+export const checkUser = (req: Request, res: Response, next: NextFunction) => {
+  if (
+    !req.headers.authorization ||
+    typeof req.headers.authorization !== "string"
+  ) {
+    return next(new Error("Invalid Auth Header"));
   }
-  let token=req.headers.authorization!.split(" ")[1]
-  let payload=jwtUtils.verifyToken(token)
-  res.locals.user=payload.sub;
-  next()
-}
+  let token = req.headers.authorization!.split(" ")[1];
+  let payload = jwtUtils.verifyToken(token);
+  res.locals.user = payload.sub;
+  next();
+};
