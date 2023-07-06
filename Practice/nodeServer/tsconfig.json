@@ -5,7 +5,7 @@
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
-    "types": ["node", "express", "cors"],
+    "types": ["node", "express", "cors", "jest"],
     "skipLibCheck": true
   },
   "exclude": ["node_modules"]
