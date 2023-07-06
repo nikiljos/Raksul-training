@@ -21,7 +21,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
   const [popupData, setPopupData] = useState<popupData>();
   const [showPopup, setShowPopup] = useState<boolean>();
 
-  const { user } = useAppSelector((state) => state.auth);
+  const { token } = useAppSelector((state) => state.auth);
   const queryClient = useQueryClient();
 
   async function onSubmitHandler() {
@@ -31,10 +31,10 @@ function GroupForm({ endpoint, createGroup }: Props) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           groupName: groupInfo,
-          admin: user.id,
         }),
       }
     );
