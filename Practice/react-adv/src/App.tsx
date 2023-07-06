@@ -1,5 +1,7 @@
 import "./App.css";
-import JsonATA from "./components/jsonATA/JsonATA";
+import CustomeHook from "./components/CustomeHook/CustomeHook";
+
+// import JsonATA from "./components/jsonATA/JsonATA";
 
 // import CounterWithTLK from "./components/ReduxToolkit/CounterWithTLK";
 // import { Provider } from "react-redux";
@@ -21,7 +23,8 @@ function App() {
       {/* <Provider store={store}>
         <CounterWithTLK />
       </Provider> */}
-      <JsonATA />
+      {/* <JsonATA /> */}
+      <CustomeHook />
     </div>
   );
 }
