@@ -3,6 +3,7 @@ import "./TransactionTable.css";
 import { useEffect, useState } from "react";
 import TanstackTable from "./TanstackTable/TanstackTable";
 import { useQuery } from "@tanstack/react-query";
+import { useAppSelector } from "../../../hooks";
 
 export type Transaction = {
   spender: number;
@@ -17,9 +18,18 @@ function TransactionTable() {
   const [transactionData, setTransactionData] = useState<Transaction[]>();
   const [isLoaded, setIsLoaded] = useState<Boolean>(false);
 
+  const auth = useAppSelector((state) => state.auth);
+
   const fetchTransactionData = async () => {
     const res = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${params.id}`
+      `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${params.id}`,
+      {
+        method:"GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      }
     );
     return res.json();
   };

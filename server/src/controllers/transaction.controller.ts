@@ -1,8 +1,12 @@
 import { Request, Response } from "express";
 import transactionService from "../services/transaction.service";
 
+
+// transaction id still vulnerable to IDOR, 
+// Need to fix group members table first
 const addTransaction = async (req: Request, res: Response) => {
-  const { spender, payment_of, amount, benefactor, group } = req.body.formData;
+  const { payment_of, amount, benefactor, group } = req.body.formData;
+  const spender = res.locals.user
   const group_data = await transactionService.addTransaction({
     spender,
     payment_of,

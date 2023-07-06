@@ -14,7 +14,7 @@ type FormData = {
 };
 
 function InputForm() {
-  const { user } = useAppSelector((state) => state.auth);
+  const { user,token } = useAppSelector((state) => state.auth);
   const queryClient = useQueryClient();
 
   const params = useParams();
@@ -40,6 +40,7 @@ function InputForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify({
           formData,

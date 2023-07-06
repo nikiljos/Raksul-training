@@ -25,7 +25,13 @@ function GroupHistory({ limit }: Props) {
     queryFn: () =>
       auth.user.id
         ? fetch(
-            `${process.env.REACT_APP_SERVER_URL}/api/group/history/${auth.user.id}`
+            `${process.env.REACT_APP_SERVER_URL}/api/group/history`,{
+              method:"GET",
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${auth.token}`,
+              },
+            }
           )
             .then((res) => res.json())
             .then(
