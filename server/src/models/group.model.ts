@@ -25,6 +25,20 @@ const Group = db.define(
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
+    members: {
+      type: DataTypes.STRING,
+      allowNull: false, 
+      get() {
+        const value = this.getDataValue("members");
+        return value ? value.split(",") : [];
+      },
+      set(value) {
+        this.setDataValue(
+          "members",
+          Array.isArray(value) ? value.join(",") : value
+        );
+      },
+    },
   },
   {
     freezeTableName: true,

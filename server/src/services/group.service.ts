@@ -7,23 +7,45 @@ type group_data = {
 };
 
 type groupData = {
-  groupName: string | null;
+  name: string | null;
   admin: number;
   invite_code: string;
+  members: string[];
 };
 
 const createGroup = async (groupData: groupData) => {
-  const { groupName, admin, invite_code } = groupData;
   try {
-    const group: group_data = await Group.create({
-      name: groupName,
-      admin,
-      invite_code,
-    });
+    const group: group_data = await Group.create(groupData);
     return group.dataValues;
   } catch (error) {
     console.log("error, ", error);
     throw new Error("Error creating group");
+  }
+};
+
+const joinGroup = async (invite_code: string, user: string) => {
+  try {
+    let group = await Group.findOne({
+      where: {
+        invite_code,
+      },
+    });
+    if (group && group.get("invite_open")) {
+      let members = group.get("members");
+      let memList = Array.isArray(members) ? members : [];
+      if (!memList.find((elt) => elt === user)) {
+        memList.push(user);
+        group.set("members", memList);
+        let res=await group.save();
+        return res.dataValues
+      } else {
+        throw new Error("Already Member");
+      }
+    } else {
+      throw new Error("Invite Closed");
+    }
+  } catch (err) {
+    throw err;
   }
 };
 
@@ -40,6 +62,7 @@ const getHistory = async (admin: number) => {
 
 export default {
   createGroup,
+  joinGroup,
   generateInvitationCode,
   getHistory,
 };
