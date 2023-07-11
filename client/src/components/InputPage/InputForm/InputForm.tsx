@@ -14,7 +14,7 @@ type FormData = {
 };
 
 function InputForm() {
-  const { user,token } = useAppSelector((state) => state.auth);
+  const { user, token } = useAppSelector((state) => state.auth);
   const queryClient = useQueryClient();
 
   const params = useParams();
@@ -40,7 +40,7 @@ function InputForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           formData,
@@ -108,20 +108,20 @@ function InputForm() {
           <CheckBox
             formData={formData}
             setFormData={setFormData}
-            benefactor_name="Raju"
-            benefactor_id={13}
+            benefactor_name="Alex"
+            benefactor_id={123}
           />
           <CheckBox
             formData={formData}
             setFormData={setFormData}
-            benefactor_name="Techy"
-            benefactor_id={14}
+            benefactor_name="Suzen"
+            benefactor_id={143}
           />
           <CheckBox
             formData={formData}
             setFormData={setFormData}
-            benefactor_name="Photo"
-            benefactor_id={15}
+            benefactor_name="Markus"
+            benefactor_id={112}
           />
         </div>
       </div>

@@ -46,33 +46,19 @@ function GroupForm({ endpoint, createGroup }: Props) {
   const groupMutation = useMutation(onSubmitHandler, {
     onSuccess: (data) => {
       if (data.success) {
-        setPopupData({
-          message: data.message,
-          group_data: data.group_data,
-        });
-        setShowPopup(true);
-
         queryClient.invalidateQueries(["history"]);
+        if (createGroup) {
+          setPopupData({
+            message: data.message,
+            group_data: data.group_data,
+          });
+          setShowPopup(true);
+        } else {
+          navigate(`/group/${data.data.id}`);
+        }
       }
     },
   });
-
-  const auth = useAppSelector((state) => state.auth);
-
-  const getGroupCode = async () => {
-    const res = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/group/get-code/${groupInfo}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => navigate(`/group/${data.data.id}`));
-  };
 
   return (
     <>
@@ -87,8 +73,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
         className="create-group-form"
         onSubmit={(e) => {
           e.preventDefault();
-          if (createGroup) groupMutation.mutate();
-          else getGroupCode();
+          groupMutation.mutate();
         }}
       >
         <h2 className="create-group-heading">

@@ -1,8 +1,12 @@
+import { Link } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import "./Home.css";
 import Step from "./Step/Step";
+import { useAppSelector } from "../../hooks";
 
 function Home() {
+  const auth = useAppSelector((state) => state.auth);
+  console.log(auth);
   return (
     <div className="home-container">
       <div className="home-hero">
@@ -17,7 +21,12 @@ function Home() {
               elementum volutpat ac.
             </p>
           </div>
-          <button className="hero-cta btn-primary">Get Started</button>
+          <Link
+            to={auth.user.id ? "home" : "/login"}
+            className="hero-cta btn-primary"
+          >
+            Get Started
+          </Link>
         </div>
         <div className="home-hero-right">
           <img src="/images/hero-img.png" alt="" />
@@ -55,7 +64,12 @@ function Home() {
             />
           </div>
         </div>
-        <button className="working-cta btn-primary">Get Started</button>
+        <Link
+          to={auth.user.id ? "home" : "/login"}
+          className="working-cta btn-primary"
+        >
+          Get Started
+        </Link>
       </div>
       <Footer />
     </div>
