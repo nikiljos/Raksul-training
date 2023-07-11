@@ -3,7 +3,6 @@ import userService from "../services/user.service";
 
 const getDetail = (req: Request, res: Response) => {
   userService.getDetail(res.locals.user).then((user) => {
-    // console.log(user)
     const data = {
       id: user?.get("id"),
       name: user?.get("name"),

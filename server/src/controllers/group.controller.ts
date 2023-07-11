@@ -22,11 +22,9 @@ const joinGroup = async (req: Request, res: Response, next: NextFunction) => {
   const { groupName: invite_code } = req.body;
   const { user } = res.locals;
   const data = await groupService.joinGroup(invite_code, user);
-  const group_code = await groupService.getGroupCode(invite_code);
   res.status(200).send({
     success: 200,
     data,
-    group_code,
   });
 };
 
@@ -41,4 +39,13 @@ const getHistory = async (req: Request, res: Response) => {
   });
 };
 
-export default { createGroup, getHistory, joinGroup };
+const getMembers = async (req: Request, res: Response) => {
+  const group_id = req.params.group_id;
+  const data = await groupService.getMembers(Number(group_id));
+  res.status(200).send({
+    success: true,
+    data,
+  });
+};
+
+export default { createGroup, getHistory, joinGroup, getMembers };

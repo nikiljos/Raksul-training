@@ -1,9 +1,9 @@
 import "./InputForm.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../hooks";
 import CheckBox from "../CheckBox/CheckBox";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type FormData = {
   spender: number;
@@ -11,6 +11,11 @@ type FormData = {
   amount: number;
   benefactor: Array<Number>;
   group: number;
+};
+
+type Member = {
+  name: string;
+  id: number;
 };
 
 function InputForm() {
@@ -27,6 +32,7 @@ function InputForm() {
   };
 
   const [formData, setFormData] = useState<FormData>(initialValues);
+  const [memberList, setMemberList] = useState<Member[]>();
 
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -55,6 +61,28 @@ function InputForm() {
       if (data.success) queryClient.invalidateQueries(["getTransactionData"]);
     },
   });
+
+  const getMembers = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/group/members/${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.json();
+  };
+
+  const { data, status } = useQuery(["getMembers"], getMembers);
+
+  useEffect(() => {
+    if (status === "success") {
+      setMemberList(data.data);
+    }
+  }, [status, data]);
 
   return (
     <form
@@ -105,24 +133,17 @@ function InputForm() {
             benefactor_name="All"
             benefactor_id={4443224}
           />
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="Alex"
-            benefactor_id={123}
-          />
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="Suzen"
-            benefactor_id={143}
-          />
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="Markus"
-            benefactor_id={112}
-          />
+          {memberList &&
+            memberList.map((member) => {
+              return (
+                <CheckBox
+                  formData={formData}
+                  setFormData={setFormData}
+                  benefactor_name={member.name}
+                  benefactor_id={member.id}
+                />
+              );
+            })}
         </div>
       </div>
       <button type="submit" className="get-started-btn">

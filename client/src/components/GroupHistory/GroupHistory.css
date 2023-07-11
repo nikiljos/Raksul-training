@@ -18,3 +18,8 @@
   gap: 20px;
   width: 100%;
 }
+.group-history .no-group-found {
+  opacity: 0.5;
+
+  font-size: 18px;
+}

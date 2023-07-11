@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./GroupForm.css";
 import SuccessPopup from "../SuccessPopup/SuccessPopup";
 import { useAppSelector } from "../../../hooks";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
