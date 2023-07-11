@@ -33,7 +33,7 @@ const joinGroup = async (invite_code: string, user: string) => {
     if (group && group.get("invite_open")) {
       let members = group.get("members");
       let memList = Array.isArray(members) ? members : [];
-      if (!memList.find((elt) => elt === user)) {
+      if (!memList.includes(user.toString())) {
         memList.push(user);
         group.set("members", memList);
         let res = await group.save();
