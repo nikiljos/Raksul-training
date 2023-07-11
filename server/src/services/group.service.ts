@@ -36,8 +36,8 @@ const joinGroup = async (invite_code: string, user: string) => {
       if (!memList.find((elt) => elt === user)) {
         memList.push(user);
         group.set("members", memList);
-        let res=await group.save();
-        return res.dataValues
+        let res = await group.save();
+        return res.dataValues;
       } else {
         throw new Error("Already Member");
       }
@@ -60,9 +60,16 @@ const getHistory = async (admin: number) => {
   });
 };
 
+const getGroupCode = async (invite_code: string) => {
+  return await Group.findOne({
+    where: { invite_code },
+  });
+};
+
 export default {
   createGroup,
   joinGroup,
   generateInvitationCode,
   getHistory,
+  getGroupCode,
 };

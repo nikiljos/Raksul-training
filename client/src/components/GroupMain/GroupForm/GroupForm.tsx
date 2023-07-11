@@ -2,7 +2,8 @@ import { useState } from "react";
 import "./GroupForm.css";
 import SuccessPopup from "../SuccessPopup/SuccessPopup";
 import { useAppSelector } from "../../../hooks";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   endpoint: string;
@@ -23,6 +24,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
 
   const { token } = useAppSelector((state) => state.auth);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   async function onSubmitHandler() {
     const res = await fetch(
@@ -31,7 +33,7 @@ function GroupForm({ endpoint, createGroup }: Props) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           groupName: groupInfo,
@@ -54,6 +56,24 @@ function GroupForm({ endpoint, createGroup }: Props) {
       }
     },
   });
+
+  const auth = useAppSelector((state) => state.auth);
+
+  const getGroupCode = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/group/get-code/${groupInfo}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => navigate(`/group/${data.data.id}`));
+  };
+
   return (
     <>
       {showPopup && (
@@ -67,7 +87,8 @@ function GroupForm({ endpoint, createGroup }: Props) {
         className="create-group-form"
         onSubmit={(e) => {
           e.preventDefault();
-          groupMutation.mutate();
+          if (createGroup) groupMutation.mutate();
+          else getGroupCode();
         }}
       >
         <h2 className="create-group-heading">

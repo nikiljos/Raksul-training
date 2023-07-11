@@ -19,12 +19,12 @@ const createGroup = async (req: Request, res: Response) => {
 };
 
 const joinGroup = async (req: Request, res: Response, next: NextFunction) => {
-  const { groupName:invite_code } = req.body;
+  const { groupName: invite_code } = req.body;
   const { user } = res.locals;
-  const data=await groupService.joinGroup(invite_code, user);
+  const data = await groupService.joinGroup(invite_code, user);
   res.status(200).send({
     success: 200,
-    data
+    data,
   });
 };
 
@@ -39,4 +39,13 @@ const getHistory = async (req: Request, res: Response) => {
   });
 };
 
-export default { createGroup, getHistory, joinGroup };
+const getGroupCode = async (req: Request, res: Response) => {
+  const invite_code = req.params.id;
+  const data = await groupService.getGroupCode(invite_code);
+  res.status(200).send({
+    success: true,
+    data,
+  });
+};
+
+export default { createGroup, getHistory, joinGroup, getGroupCode };
