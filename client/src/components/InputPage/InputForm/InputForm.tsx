@@ -1,5 +1,5 @@
 import "./InputForm.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../hooks";
 import CheckBox from "../CheckBox/CheckBox";
@@ -32,7 +32,6 @@ function InputForm() {
   };
 
   const [formData, setFormData] = useState<FormData>(initialValues);
-  const [memberList, setMemberList] = useState<Member[]>();
 
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -65,27 +64,26 @@ function InputForm() {
     },
   });
 
-  const getMembers = async () => {
-    const res = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/group/members/${params.id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    return res.json();
-  };
+  const getMembers = () =>
+    user.id
+      ? fetch(
+          `${process.env.REACT_APP_SERVER_URL}/api/group/members/${params.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => data.data)
+      : [];
 
-  const { data, status } = useQuery(["getMembers"], getMembers);
-
-  useEffect(() => {
-    if (status === "success") {
-      setMemberList(data.data);
-    }
-  }, [status, data]);
+  const { data: memberList, status: listStatus } = useQuery(
+    ["getMembers", user],
+    getMembers
+  );
 
   return (
     <form
@@ -130,18 +128,19 @@ function InputForm() {
       <div className="form-item check-box-container">
         <label>Paid for...</label>
         <div className="cb-box">
-          {memberList &&
-            memberList.map((member) => {
-              return (
-                <CheckBox
-                  key={member.id}
-                  formData={formData}
-                  setFormData={setFormData}
-                  benefactor_name={member.name}
-                  benefactor_id={member.id}
-                />
-              );
-            })}
+          {listStatus === "success"
+            ? memberList.map((member: Member) => {
+                return (
+                  <CheckBox
+                    key={member.id}
+                    formData={formData}
+                    setFormData={setFormData}
+                    benefactor_name={member.name}
+                    benefactor_id={member.id}
+                  />
+                );
+              })
+            : "Loading..."}
         </div>
       </div>
       <button type="submit" className="get-started-btn">
