@@ -45,7 +45,7 @@ const joinGroup = async (invite_code: string, user: string) => {
         let res = await group.save();
         return res.dataValues;
       } else {
-        throw new Error("Already Member");
+        return group;
       }
     } else {
       throw new Error("Invite Closed");

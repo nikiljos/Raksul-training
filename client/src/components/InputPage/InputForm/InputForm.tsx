@@ -58,7 +58,10 @@ function InputForm() {
 
   const transactionMutation = useMutation(onSubmitHandler, {
     onSuccess: (data) => {
-      if (data.success) queryClient.invalidateQueries(["getTransactionData"]);
+      if (data.success) {
+        queryClient.invalidateQueries(["getTransactionData"]);
+        // setFormData(initialValues);
+      }
     },
   });
 
@@ -127,16 +130,11 @@ function InputForm() {
       <div className="form-item check-box-container">
         <label>Paid for...</label>
         <div className="cb-box">
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="All"
-            benefactor_id={4443224}
-          />
           {memberList &&
             memberList.map((member) => {
               return (
                 <CheckBox
+                  key={member.id}
                   formData={formData}
                   setFormData={setFormData}
                   benefactor_name={member.name}

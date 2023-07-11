@@ -24,7 +24,7 @@ function TransactionTable() {
     const res = await fetch(
       `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${params.id}`,
       {
-        method:"GET",
+        method: "GET",
         headers: {
           "Content-type": "application/json",
           Authorization: `Bearer ${auth.token}`,
