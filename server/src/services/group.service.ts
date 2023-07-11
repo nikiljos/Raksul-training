@@ -1,4 +1,5 @@
 import Group from "../models/group.model";
+import User from "../models/user.model";
 // import uniqid from "uniqid";
 var uniqid = require("uniqid");
 
@@ -66,10 +67,42 @@ const getGroupCode = async (invite_code: string) => {
   });
 };
 
+const getMemberList = async (groupId: number) => {
+  try {
+    let memberIds = await Group.findOne({
+      where: {
+        id: groupId,
+      },
+    }).then((res) => {
+      let members = res?.get("members");
+      return members && Array.isArray(members) ? members : [];
+    });
+    let members=await Promise.all(memberIds.map((user) => 
+      User.findOne({
+        where:{
+          id:user
+        }
+      })
+      .then(data=>{
+        console.log(data?.dataValues)
+        return {
+          id: data?.get("id"),
+          name: data?.get("name"),
+          email:data?.get("email")
+        }
+      })
+    ));
+    return members
+  } catch (err) {
+    throw err;
+  }
+};
+
 export default {
   createGroup,
   joinGroup,
   generateInvitationCode,
   getHistory,
   getGroupCode,
+  getMemberList
 };

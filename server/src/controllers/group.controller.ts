@@ -48,4 +48,14 @@ const getGroupCode = async (req: Request, res: Response) => {
   });
 };
 
-export default { createGroup, getHistory, joinGroup, getGroupCode };
+// TODO: Fix IDOR
+const getMemberList=async(req:Request,res:Response)=>{
+  const group=Number(req.params.id)
+  let memberList=await groupService.getMemberList(group)
+  res.status(200).send({
+    success:true,
+    data:memberList
+  })
+}
+
+export default { createGroup, getHistory, joinGroup, getGroupCode, getMemberList };
