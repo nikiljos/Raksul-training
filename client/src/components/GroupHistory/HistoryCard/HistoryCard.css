@@ -42,8 +42,11 @@
 
   display: flex;
   align-items: center;
+
+  cursor: pointer;
 }
 
 .hc-btn.file {
-  background: #00ce00;
+  /* background: #00ce00; */
+  background: #ff0000;
 }

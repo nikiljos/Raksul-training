@@ -48,4 +48,14 @@ const getMembers = async (req: Request, res: Response) => {
   });
 };
 
-export default { createGroup, getHistory, joinGroup, getMembers };
+const deleteGroup = async (req: Request, res: Response) => {
+  const group_id = req.params.group_id;
+  const admin = res.locals.user;
+  const data = await groupService.deleteGroup(Number(group_id), Number(admin));
+  res.status(data.status).send({
+    success: data.success,
+    message: data.message,
+  });
+};
+
+export default { createGroup, getHistory, joinGroup, getMembers, deleteGroup };

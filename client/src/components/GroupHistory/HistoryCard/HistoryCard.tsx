@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import "./HistoryCard.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAppSelector } from "../../../hooks";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   name: string;
@@ -11,6 +13,9 @@ type Props = {
 };
 
 function HistoryCard({ name, id, date, invite_code }: Props) {
+  const { token } = useAppSelector((state) => state.auth);
+  const queryClient = useQueryClient();
+
   function formatDate(dateString: string): string {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
@@ -32,6 +37,31 @@ function HistoryCard({ name, id, date, invite_code }: Props) {
       });
   };
 
+  const handleDelete = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/group/delete/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.json();
+  };
+
+  const deleteMutation = useMutation(handleDelete, {
+    onSuccess: (data) => {
+      if (data.success) {
+        toast.success("Group deleted!");
+        queryClient.invalidateQueries(["history"]);
+      } else {
+        toast.error(data.message);
+      }
+    },
+  });
+
   return (
     <>
       <div className="history-card">
@@ -49,8 +79,9 @@ function HistoryCard({ name, id, date, invite_code }: Props) {
           <Link to={`/group/${id}`} className="hc-btn view">
             <img src="/images/view.svg" alt="View" />
           </Link>
-          <div className="hc-btn file">
-            <img src="/images/file.svg" alt="Export" />
+          <div className="hc-btn file" onClick={() => deleteMutation.mutate()}>
+            {/* <img src="/images/file.svg" alt="Export" /> */}
+            <img src="/images/delete.svg" alt="Delete" />
           </div>
         </div>
       </div>

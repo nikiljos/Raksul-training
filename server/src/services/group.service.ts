@@ -109,10 +109,32 @@ const getMembers = async (group_id: number) => {
   }
 };
 
+const deleteGroup = async (id: number, admin: number) => {
+  try {
+    const data = await Group.destroy({ where: { id, admin } });
+    if (data === 0) {
+      return {
+        success: false,
+        status: 422,
+        message: "Only admin can delete this group.",
+      };
+    }
+    return {
+      success: true,
+      status: 200,
+      message: "Group deleted successfully!",
+    };
+  } catch (error) {
+    console.error("Error deleting group:", error);
+    throw error;
+  }
+};
+
 export default {
   createGroup,
   joinGroup,
   generateInvitationCode,
   getHistory,
   getMembers,
+  deleteGroup,
 };
