@@ -1,6 +1,7 @@
 import Group from "../models/group.model";
-// import uniqid from "uniqid";
+import { Op } from "sequelize";
 var uniqid = require("uniqid");
+import userService from "./user.service";
 
 type group_data = {
   [key: string]: any;
@@ -11,6 +12,11 @@ type groupData = {
   admin: number;
   invite_code: string;
   members: string[];
+};
+
+type memberData = {
+  name: string;
+  id: number;
 };
 
 const createGroup = async (groupData: groupData) => {
@@ -33,13 +39,13 @@ const joinGroup = async (invite_code: string, user: string) => {
     if (group && group.get("invite_open")) {
       let members = group.get("members");
       let memList = Array.isArray(members) ? members : [];
-      if (!memList.find((elt) => elt === user)) {
+      if (!memList.includes(user.toString())) {
         memList.push(user);
         group.set("members", memList);
         let res = await group.save();
         return res.dataValues;
       } else {
-        throw new Error("Already Member");
+        return group;
       }
     } else {
       throw new Error("Invite Closed");
@@ -54,16 +60,74 @@ const generateInvitationCode = () => {
 };
 
 const getHistory = async (admin: number) => {
-  return await Group.findAll({
-    where: { admin },
-    order: [["createdAt", "DESC"]],
-  });
+  try {
+    return await Group.findAll({
+      where: {
+        members: {
+          [Op.like]: `%${admin}%`,
+        },
+      },
+      order: [["createdAt", "DESC"]],
+    });
+  } catch (error) {
+    console.error("Error retrieving groups:", error);
+    throw error;
+  }
 };
 
-const getGroupCode = async (invite_code: string) => {
-  return await Group.findOne({
-    where: { invite_code },
-  });
+const getMembersInfo = async (members_list: string[]) => {
+  const memberData: memberData[] = [];
+  if (members_list.length > 1) {
+    for (const id of members_list) {
+      const name = await userService.getUsername(id);
+      memberData.push({ name, id: Number(id) });
+    }
+    return memberData;
+  }
+};
+
+const getMembers = async (group_id: number) => {
+  try {
+    const group = await Group.findOne({
+      where: {
+        id: group_id,
+      },
+    });
+
+    if (!group) {
+      throw new Error("No Members Found");
+    }
+
+    const members = group.get("members");
+    const members_list = Array.isArray(members) ? members : [];
+    const memberData = await getMembersInfo(members_list);
+
+    return memberData;
+  } catch (error) {
+    console.error("Error retrieving groups:", error);
+    throw error;
+  }
+};
+
+const deleteGroup = async (id: number, admin: number) => {
+  try {
+    const data = await Group.destroy({ where: { id, admin } });
+    if (data === 0) {
+      return {
+        success: false,
+        status: 422,
+        message: "Only admin can delete this group.",
+      };
+    }
+    return {
+      success: true,
+      status: 200,
+      message: "Group deleted successfully!",
+    };
+  } catch (error) {
+    console.error("Error deleting group:", error);
+    throw error;
+  }
 };
 
 export default {
@@ -71,5 +135,6 @@ export default {
   joinGroup,
   generateInvitationCode,
   getHistory,
-  getGroupCode,
+  getMembers,
+  deleteGroup,
 };

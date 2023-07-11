@@ -24,15 +24,13 @@ function GroupHistory({ limit }: Props) {
     queryKey: ["history", auth, limit],
     queryFn: () =>
       auth.user.id
-        ? fetch(
-            `${process.env.REACT_APP_SERVER_URL}/api/group/history`,{
-              method:"GET",
-              headers: {
-                "Content-type": "application/json",
-                Authorization: `Bearer ${auth.token}`,
-              },
-            }
-          )
+        ? fetch(`${process.env.REACT_APP_SERVER_URL}/api/group/history`, {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
+            },
+          })
             .then((res) => res.json())
             .then(
               (data) =>
@@ -68,7 +66,9 @@ function GroupHistory({ limit }: Props) {
                 );
               })
             ) : (
-              <h3>No Groups found</h3>
+              <h3 className="no-group-found">
+                <i>No Groups found</i>
+              </h3>
             )}
           </div>
         )}

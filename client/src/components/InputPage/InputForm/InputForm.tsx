@@ -1,9 +1,9 @@
 import "./InputForm.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../hooks";
 import CheckBox from "../CheckBox/CheckBox";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 type FormData = {
   spender: number;
@@ -13,8 +13,13 @@ type FormData = {
   group: number;
 };
 
+type Member = {
+  name: string;
+  id: number;
+};
+
 function InputForm() {
-  const { user,token } = useAppSelector((state) => state.auth);
+  const { user, token } = useAppSelector((state) => state.auth);
   const queryClient = useQueryClient();
 
   const params = useParams();
@@ -27,6 +32,7 @@ function InputForm() {
   };
 
   const [formData, setFormData] = useState<FormData>(initialValues);
+  const [memberList, setMemberList] = useState<Member[]>();
 
   function onChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -40,7 +46,7 @@ function InputForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           formData,
@@ -52,9 +58,34 @@ function InputForm() {
 
   const transactionMutation = useMutation(onSubmitHandler, {
     onSuccess: (data) => {
-      if (data.success) queryClient.invalidateQueries(["getTransactionData"]);
+      if (data.success) {
+        queryClient.invalidateQueries(["getTransactionData"]);
+        // setFormData(initialValues);
+      }
     },
   });
+
+  const getMembers = async () => {
+    const res = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/api/group/members/${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.json();
+  };
+
+  const { data, status } = useQuery(["getMembers"], getMembers);
+
+  useEffect(() => {
+    if (status === "success") {
+      setMemberList(data.data);
+    }
+  }, [status, data]);
 
   return (
     <form
@@ -99,30 +130,18 @@ function InputForm() {
       <div className="form-item check-box-container">
         <label>Paid for...</label>
         <div className="cb-box">
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="All"
-            benefactor_id={4443224}
-          />
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="Raju"
-            benefactor_id={13}
-          />
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="Techy"
-            benefactor_id={14}
-          />
-          <CheckBox
-            formData={formData}
-            setFormData={setFormData}
-            benefactor_name="Photo"
-            benefactor_id={15}
-          />
+          {memberList &&
+            memberList.map((member) => {
+              return (
+                <CheckBox
+                  key={member.id}
+                  formData={formData}
+                  setFormData={setFormData}
+                  benefactor_name={member.name}
+                  benefactor_id={member.id}
+                />
+              );
+            })}
         </div>
       </div>
       <button type="submit" className="get-started-btn">

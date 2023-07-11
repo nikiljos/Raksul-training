@@ -39,13 +39,23 @@ const getHistory = async (req: Request, res: Response) => {
   });
 };
 
-const getGroupCode = async (req: Request, res: Response) => {
-  const invite_code = req.params.id;
-  const data = await groupService.getGroupCode(invite_code);
+const getMembers = async (req: Request, res: Response) => {
+  const group_id = req.params.group_id;
+  const data = await groupService.getMembers(Number(group_id));
   res.status(200).send({
     success: true,
     data,
   });
 };
 
-export default { createGroup, getHistory, joinGroup, getGroupCode };
+const deleteGroup = async (req: Request, res: Response) => {
+  const group_id = req.params.group_id;
+  const admin = res.locals.user;
+  const data = await groupService.deleteGroup(Number(group_id), Number(admin));
+  res.status(data.status).send({
+    success: data.success,
+    message: data.message,
+  });
+};
+
+export default { createGroup, getHistory, joinGroup, getMembers, deleteGroup };

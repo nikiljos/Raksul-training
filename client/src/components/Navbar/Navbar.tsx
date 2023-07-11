@@ -37,7 +37,7 @@ function Navbar() {
   return (
     <div className="navbar">
       <div className="nav-logo">
-        <Link to="/home">
+        <Link to="/">
           <img src="/images/cashcut-logo.svg" alt="CashCut" />
         </Link>
       </div>
