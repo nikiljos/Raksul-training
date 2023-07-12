@@ -130,6 +130,26 @@ const deleteGroup = async (id: number, admin: number) => {
   }
 };
 
+const checkGroupMember=async (groupId:string,user:string)=>{
+  try{
+    const groupData=await Group.findOne({
+      where:{
+        id:groupId
+      }
+    })
+    const admin=groupData?.get("admin")?.toString()
+    const memberData=groupData?.get("members")
+    const memberList=Array.isArray(memberData)?memberData:[]
+    if(user===admin||memberList.includes(user)){
+      return true
+    }
+    return false
+  }
+  catch(err){
+    throw err
+  }
+}
+
 export default {
   createGroup,
   joinGroup,
@@ -137,4 +157,5 @@ export default {
   getHistory,
   getMembers,
   deleteGroup,
+  checkGroupMember
 };
