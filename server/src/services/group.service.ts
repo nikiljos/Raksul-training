@@ -77,7 +77,7 @@ const getHistory = async (admin: number) => {
 
 const getMembersInfo = async (members_list: string[]) => {
   const memberData: memberData[] = [];
-  if (members_list.length > 1) {
+  if (members_list.length > 0) {
     for (const id of members_list) {
       const name = await userService.getUsername(id);
       memberData.push({ name, id: Number(id) });
@@ -101,7 +101,7 @@ const getMembers = async (group_id: number) => {
     const members = group.get("members");
     const members_list = Array.isArray(members) ? members : [];
     const memberData = await getMembersInfo(members_list);
-
+    console.log(memberData)
     return memberData;
   } catch (error) {
     console.error("Error retrieving groups:", error);
