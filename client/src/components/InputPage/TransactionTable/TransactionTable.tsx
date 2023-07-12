@@ -20,7 +20,7 @@ function TransactionTable() {
   const fetchTransactionData = () =>
     auth.user.id
       ? fetch(
-          `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${params.id}`,
+          `${process.env.REACT_APP_SERVER_URL}/api/transaction/${params.id}/get`,
           {
             method: "GET",
             headers: {

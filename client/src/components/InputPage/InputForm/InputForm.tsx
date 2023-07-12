@@ -1,5 +1,5 @@
 import "./InputForm.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../hooks";
 import CheckBox from "../CheckBox/CheckBox";
@@ -40,7 +40,7 @@ function InputForm() {
 
   async function onSubmitHandler() {
     const res = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/transaction/add`,
+      `${process.env.REACT_APP_SERVER_URL}/api/transaction/${params.id}/add`,
       {
         method: "POST",
         headers: {
@@ -128,7 +128,7 @@ function InputForm() {
       <div className="form-item check-box-container">
         <label>Paid for...</label>
         <div className="cb-box">
-          {listStatus === "success"
+          {listStatus === "success"&&Array.isArray(memberList)
             ? memberList.map((member: Member) => {
                 return (
                   <CheckBox

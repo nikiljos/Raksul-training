@@ -3,6 +3,7 @@
 import { Request, Response, NextFunction } from "express";
 import { OAuth2Client, TokenPayload } from "google-auth-library";
 import jwtUtils from "../utils/jwtUtils";
+import groupService from "../services/group.service";
 
 const CLIENT_ID = process.env.OAUTH_CID;
 const client = new OAuth2Client(CLIENT_ID);
@@ -48,3 +49,18 @@ export const checkUser = (req: Request, res: Response, next: NextFunction) => {
   res.locals.user = payload.sub;
   next();
 };
+
+export const checkGroupMember=async (req: Request, res: Response, next: NextFunction)=>{
+  let groupId=req.params.group_id
+  let user=res.locals.user.toString()
+  try {
+    if(await groupService.checkGroupMember(groupId,user)){
+      res.locals.groupId=groupId
+      next()
+    }
+    else next(new Error("Access Restricted!"))
+  }
+  catch(err){
+    next(err)
+  }
+}

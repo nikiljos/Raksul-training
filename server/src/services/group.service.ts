@@ -77,7 +77,7 @@ const getHistory = async (admin: number) => {
 
 const getMembersInfo = async (members_list: string[]) => {
   const memberData: memberData[] = [];
-  if (members_list.length > 1) {
+  if (members_list.length > 0) {
     for (const id of members_list) {
       const name = await userService.getUsername(id);
       memberData.push({ name, id: Number(id) });
@@ -101,7 +101,7 @@ const getMembers = async (group_id: number) => {
     const members = group.get("members");
     const members_list = Array.isArray(members) ? members : [];
     const memberData = await getMembersInfo(members_list);
-
+    console.log(memberData)
     return memberData;
   } catch (error) {
     console.error("Error retrieving groups:", error);
@@ -130,6 +130,26 @@ const deleteGroup = async (id: number, admin: number) => {
   }
 };
 
+const checkGroupMember=async (groupId:string,user:string)=>{
+  try{
+    const groupData=await Group.findOne({
+      where:{
+        id:groupId
+      }
+    })
+    const admin=groupData?.get("admin")?.toString()
+    const memberData=groupData?.get("members")
+    const memberList=Array.isArray(memberData)?memberData:[]
+    if(user===admin||memberList.includes(user)){
+      return true
+    }
+    return false
+  }
+  catch(err){
+    throw err
+  }
+}
+
 export default {
   createGroup,
   joinGroup,
@@ -137,4 +157,5 @@ export default {
   getHistory,
   getMembers,
   deleteGroup,
+  checkGroupMember
 };
