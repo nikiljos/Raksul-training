@@ -28,8 +28,6 @@ const joinGroup = async (req: Request, res: Response, next: NextFunction) => {
   });
 };
 
-// group id still vulnerable to IDOR,
-// Need to fix group members table first
 const getHistory = async (req: Request, res: Response) => {
   const admin = res.locals.user;
   const data = await groupService.getHistory(Number(admin));
@@ -39,6 +37,7 @@ const getHistory = async (req: Request, res: Response) => {
   });
 };
 
+// TODO: Group ID IDOR fix
 const getMembers = async (req: Request, res: Response) => {
   const group_id = req.params.group_id;
   const data = await groupService.getMembers(Number(group_id));

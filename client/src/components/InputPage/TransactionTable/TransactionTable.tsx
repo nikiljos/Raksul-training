@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import "./TransactionTable.css";
-import { useEffect, useState } from "react";
 import TanstackTable from "./TanstackTable/TanstackTable";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "../../../hooks";
@@ -15,41 +14,34 @@ export type Transaction = {
 
 function TransactionTable() {
   const params = useParams();
-  const [transactionData, setTransactionData] = useState<Transaction[]>();
-  const [isLoaded, setIsLoaded] = useState<Boolean>(false);
 
   const auth = useAppSelector((state) => state.auth);
 
-  const fetchTransactionData = async () => {
-    const res = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${params.id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-      }
-    );
-    return res.json();
-  };
+  const fetchTransactionData = () =>
+    auth.user.id
+      ? fetch(
+          `${process.env.REACT_APP_SERVER_URL}/api/transaction/get/${params.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json",
+              Authorization: `Bearer ${auth.token}`,
+            },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => data.transaction_data)
+      : [];
 
   const { data, status } = useQuery(
-    ["getTransactionData"],
+    ["getTransactionData", auth],
     fetchTransactionData
   );
 
-  useEffect(() => {
-    if (status === "success") {
-      setTransactionData(data.transaction_data);
-      setIsLoaded(true);
-    }
-  }, [status, data]);
-
   return (
     <div>
-      {isLoaded ? (
-        <TanstackTable transactionData={transactionData as Transaction[]} />
+      {status === "success" ? (
+        <TanstackTable transactionData={data as Transaction[]} />
       ) : (
         <h1 className="loading-text">Loading...</h1>
       )}
