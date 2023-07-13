@@ -8,7 +8,7 @@ export type Transaction = {
   spender: number;
   payment_of: string;
   amount: number;
-  benefactor: Array<Number>;
+  benefactor: string[];
   group: number;
 };
 

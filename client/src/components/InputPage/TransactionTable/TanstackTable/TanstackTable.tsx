@@ -27,11 +27,12 @@ function TanstackTable({ transactionData }: Props) {
     {
       header: "PAYMENT FOR",
       accessorKey: "benefactor",
+      accessorFn: (row:Transaction) => row.benefactor.join(", ")
     },
   ];
 
   const table = useReactTable({
-    data: transactionData as Transaction[],
+    data: transactionData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });

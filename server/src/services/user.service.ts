@@ -7,7 +7,7 @@ const getDetail = (id: string) =>
 
 const getUsername = async (id: string) => {
   const data: any = await getDetail(id);
-  return data?.name.split(" ")[0];
+  return data?.name;
 };
 
 export default {
