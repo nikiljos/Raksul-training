@@ -33,7 +33,7 @@ function Signup() {
     e.preventDefault();
     setFormErrors(validate(formValues));
     toast.info("Currently Unavailable. Please sign in with Google instead.")
-    // setIsSubmit(true);
+    setIsSubmit(false);
   };
 
   const validate = (values: FormValues) => {

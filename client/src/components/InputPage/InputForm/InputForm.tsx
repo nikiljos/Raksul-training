@@ -1,5 +1,5 @@
 import "./InputForm.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../hooks";
 import CheckBox from "../CheckBox/CheckBox";

@@ -33,7 +33,7 @@ function Login() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    // setIsSubmit(true);
+    setIsSubmit(false);
     toast.info("Currently Unavailable. Please sign in with Google instead.")
   };
 
