@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import GAuthLogin from "./GAuthLogin";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { unsetUser } from "./AuthSlice";
-// import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 
 type FormValues = {
   email: string;
@@ -33,7 +33,8 @@ function Login() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    setIsSubmit(true);
+    // setIsSubmit(true);
+    toast.info("Currently Unavailable. Please sign in with Google instead.")
   };
 
   const validate = (values: FormValues) => {
@@ -73,6 +74,7 @@ function Login() {
 
   return !auth.token ? (
     <div className="login-container">
+      <ToastContainer style={{fontSize:"1.3rem"}}/>
       <h1 className="login-heading">
         <span className="yellow-text">Log In</span> to start
         <span className="yellow-text"> Splitting!</span>

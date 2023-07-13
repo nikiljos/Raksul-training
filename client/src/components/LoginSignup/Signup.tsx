@@ -1,6 +1,7 @@
 import "./LoginSignup.css";
 import React, { FormEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 type FormValues = {
   name: string;
@@ -31,7 +32,8 @@ function Signup() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setFormErrors(validate(formValues));
-    setIsSubmit(true);
+    toast.info("Currently Unavailable. Please sign in with Google instead.")
+    // setIsSubmit(true);
   };
 
   const validate = (values: FormValues) => {
@@ -67,6 +69,7 @@ function Signup() {
 
   return (
     <div className="login-container">
+      <ToastContainer style={{fontSize:"1.3rem"}}/>
       <h1 className="login-heading">
         <span className="yellow-text">Sign Up</span> to start
         <span className="yellow-text"> Splitting!</span>
