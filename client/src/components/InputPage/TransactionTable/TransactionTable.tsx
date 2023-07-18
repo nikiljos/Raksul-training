@@ -4,11 +4,17 @@ import TanstackTable from "./TanstackTable/TanstackTable";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "../../../hooks";
 
+type User = {
+  name: string;
+  id: number;
+};
+
 export type Transaction = {
   spender: number;
   payment_of: string;
   amount: number;
   benefactor: string[];
+  benefactorData: User[];
   group: number;
 };
 

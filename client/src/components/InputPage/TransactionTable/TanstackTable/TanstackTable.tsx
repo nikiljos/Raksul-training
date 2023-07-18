@@ -5,16 +5,18 @@ import {
 } from "@tanstack/react-table";
 import { Transaction } from "../TransactionTable";
 import "./TanstackTable.css";
+import { useAppSelector } from "../../../../hooks";
 
 type Props = {
   transactionData: Transaction[];
 };
 
 function TanstackTable({ transactionData }: Props) {
+  const auth = useAppSelector((state) => state.auth);
   const columns = [
     {
       header: "PAYER",
-      accessorKey: "spender",
+      accessorKey: "spenderName",
     },
     {
       header: "PAYMENT OF",
@@ -25,10 +27,15 @@ function TanstackTable({ transactionData }: Props) {
       accessorKey: "amount",
     },
     {
+      header: "SHARE",
+      accessorKey: "individualShare",
+    },
+    {
       header: "PAYMENT FOR",
       accessorKey: "benefactor",
-      accessorFn: (row:Transaction) => row.benefactor.join(", ")
-    },
+      accessorFn: (row: Transaction) =>
+        row.benefactorData.map((user) => user.name).join(", "),
+    }
   ];
 
   const table = useReactTable({
@@ -54,15 +61,19 @@ function TanstackTable({ transactionData }: Props) {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row) => {
+            const isOwed=row.original.benefactorData.find((user) => user.id === auth.user.id)
+            const isSpender=row.original.spender===auth.user.id
+            return (
+              <tr key={row.id} style={{backgroundColor:(isSpender?"#d9ead3":isOwed?"#fce5cd":"")}}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
