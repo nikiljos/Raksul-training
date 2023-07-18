@@ -21,6 +21,7 @@ type Transaction = {
   benefactor: Array<string>;
   benefactorData: Array<User>;
   group: number;
+  spenderName: string;
 };
 
 const addTransaction = async (formData: TransactionInit) => {
@@ -60,7 +61,7 @@ const getTransaction = async (groupId: number) => {
 const populateTransactions = async (transactions: Transaction[]) => {
   const data = await Promise.all(
     transactions.map(async (transaction) => {
-      transaction.spender = await userService.getUsername(
+      transaction.spenderName = await userService.getUsername(
         transaction.spender.toString()
       );
       transaction.benefactorData = await getBenefactorDetails(
