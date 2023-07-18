@@ -10,7 +10,13 @@ const getUsername = async (id: string) => {
   return data?.name;
 };
 
+const getData = async (id: string) => {
+  const data: any = await getDetail(id);
+  return { name: data.get("name") as string, id: data.get("id") as number };
+};
+
 export default {
   getDetail,
   getUsername,
+  getData,
 };

@@ -27,7 +27,8 @@ function TanstackTable({ transactionData }: Props) {
     {
       header: "PAYMENT FOR",
       accessorKey: "benefactor",
-      accessorFn: (row:Transaction) => row.benefactor.join(", ")
+      accessorFn: (row: Transaction) =>
+        row.benefactorData.map((user) => user.name).join(","),
     },
   ];
 
