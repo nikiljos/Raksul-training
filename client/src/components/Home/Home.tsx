@@ -6,7 +6,6 @@ import { useAppSelector } from "../../hooks";
 
 function Home() {
   const auth = useAppSelector((state) => state.auth);
-  console.log(auth);
   return (
     <div className="home-container">
       <div className="home-hero">
@@ -17,8 +16,8 @@ function Home() {
               Let CashCut take care of the expense management!
             </h1>
             <p className="hero-text-sm">
-              Lorem ipsum dolor sit amet consectetur. Ullamcorper lobortis
-              elementum volutpat ac.
+              Optimize expenses, effortlessly split bills with CashCut, your
+              ultimate spend manager app.
             </p>
           </div>
           <Link

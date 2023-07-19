@@ -1,5 +1,5 @@
 import "./LoginSignup.css";
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -59,13 +59,6 @@ function Signup() {
     }
     return errors;
   };
-
-  useEffect(() => {
-    console.log(Object.values(formErrors));
-    if (Object.values(formErrors).length === 0 && isSubmit) {
-      console.log("object");
-    }
-  }, [formErrors, isSubmit, formValues]);
 
   return (
     <div className="login-container">

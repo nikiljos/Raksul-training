@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import "./LoginSignup.css";
 import { Link } from "react-router-dom";
 import GAuthLogin from "./GAuthLogin";
@@ -65,12 +65,6 @@ function Login() {
     localStorage.removeItem("access_token");
     dispatch(unsetUser());
   };
-
-  useEffect(() => {
-    if (Object.values(formErrors).length === 0 && isSubmit) {
-      console.log("object");
-    }
-  }, [formErrors, isSubmit, formValues]);
 
   return !auth.token ? (
     <div className="login-container">

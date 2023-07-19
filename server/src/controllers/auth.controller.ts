@@ -11,13 +11,11 @@ const login = async (req: AuthenticatedRequest, res: Response) => {
     let authToken = await authService.getAuthToken(req.user!);
 
     if (!authToken) {
-      console.log("Token verification failed");
       return res
         .status(401)
         .json({ success: false, message: "Token verification failed" });
     }
 
-    console.log("Token verification successful");
     return res.status(200).json({
       success: true,
       message: "Token verification successful",

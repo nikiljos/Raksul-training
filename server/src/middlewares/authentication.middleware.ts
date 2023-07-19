@@ -28,7 +28,6 @@ export async function checkGAuth(
       req.user = payload as TokenPayload;
       next();
     } else {
-      console.log("Payload couldn't be received");
       res.status(401).json({ success: false, message: "Invalid token" });
     }
   } catch (error) {
