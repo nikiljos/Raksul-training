@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import "./LoginSignup.css";
 import { Link } from "react-router-dom";
 import GAuthLogin from "./GAuthLogin";
