@@ -60,13 +60,6 @@ function Signup() {
     return errors;
   };
 
-  useEffect(() => {
-    console.log(Object.values(formErrors));
-    if (Object.values(formErrors).length === 0 && isSubmit) {
-      console.log("object");
-    }
-  }, [formErrors, isSubmit, formValues]);
-
   return (
     <div className="login-container">
       <ToastContainer style={{fontSize:"1.3rem"}}/>
